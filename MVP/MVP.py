@@ -3,7 +3,6 @@ import pickle
 
 dict_enquete = dict()  # Ceci est un commentaire
 
-
 class Enquete:
     def __init__(self, nom: str):
         self.__nom = nom
