@@ -2,6 +2,7 @@ import argparse
 import pickle
 
 dict_enquete = {}
+FICHIER_SAUVEGARDE = 'enquete_data'
 
 class Enquete:
     def __init__(self, nom: str):
@@ -66,14 +67,14 @@ if __name__ == '__main__':
     if args.name and not args.preuve:
         if args.name not in list(dict_enquete.keys()):
             dict_enquete[args.name] = Enquete(args.name)
-            save_object(dict_enquete, 'enquete_data')
+            save_object(dict_enquete, FICHIER_SAUVEGARDE)
         else:
             print(f'{args.name} existe déjà')
 
     if args.preuve:
         if args.name:
             dict_enquete[args.name].preuve.append(args.preuve)
-            save_object(dict_enquete, 'enquete_data')
+            save_object(dict_enquete, FICHIER_SAUVEGARDE)
         else:
             print('Aucune enquête choisie')
 
