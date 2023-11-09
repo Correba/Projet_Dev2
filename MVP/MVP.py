@@ -3,7 +3,6 @@ import pickle
 
 dict_enquete = dict()  # Ceci est un commentaire
 
-
 class Enquete:
     def __init__(self, nom: str):
         self.__nom = nom
@@ -79,6 +78,7 @@ if __name__ == '__main__':
 
     if args.affichage:
         if len(dict_enquete) != 0:
+            print(dict_enquete) #debug
             for enquete in dict_enquete.keys():
                 print(dict_enquete[enquete])
         else:
