@@ -40,12 +40,12 @@ def save_object(obj, filename):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--name', type=str, metavar='name :',
-                        help='le nom de l\'enquête a crée ou a ajouté une preuve')
+    parser = argparse.ArgumentParser(description='Ce programme permet d\'encoder des nouvelles enquêtes et d\'encoder des preuves dans une enquête en particulier. Il permet également d\'afficher toutes les enquêtes ainsi que leur informations respectives.')
+    parser.add_argument('--name', type=str, metavar='name',
+                        help='le nom de l\'enquête a créer ou le nom de l\'enquête où il faut ajouter une preuve')
     parser.add_argument('--affichage', action='store_true',
-                        help='permet d\'afficher les enquêtes')
-    parser.add_argument('--preuve', metavar='preuve :', help='la preuve a ajouté')
+                        help='affiche les enquêtes et leurs informations respectives')
+    parser.add_argument('--preuve', metavar='preuve', help='le nom de la preuve qui est ajoutée à une enquête')
 
     args = parser.parse_args()
 
