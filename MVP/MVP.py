@@ -35,7 +35,12 @@ class Enquete:
 
 
 def save_object(obj, filename):
-    with open(filename, 'wb') as outp:  # Overwrites any existing file.
+    """
+    PRE : - obj est un objet a sauvegarder
+          - filename est un fichier où sauvegarder un objet
+    POST : Sauvegarde un objet dans un fichier
+    """
+    with open(filename, 'wb') as outp:
         pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
 
 
@@ -68,6 +73,7 @@ if __name__ == '__main__':
     if args.preuve:
         if args.name:
             dict_enquete[args.name].preuve.append(args.preuve)
+            save_object(dict_enquete, 'enquete_data')
         else:
             print('Aucune enquête choisie')
 
