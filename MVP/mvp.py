@@ -1,3 +1,4 @@
+"""Module pour utiliser des options en ligne de commande"""
 import argparse
 import pickle
 
