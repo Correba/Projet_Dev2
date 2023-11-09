@@ -1,7 +1,7 @@
 import argparse
 import pickle
 
-dict_enquete = {}  # Ceci est un commentaire
+dict_enquete = {}
 
 class Enquete:
     def __init__(self, nom: str):
