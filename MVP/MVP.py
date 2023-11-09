@@ -59,8 +59,11 @@ if __name__ == '__main__':
         print('Erreur IO')
 
     if args.name and not args.preuve:
-        dict_enquete[args.name] = Enquete(args.name)
-        save_object(dict_enquete, 'enquete_data')
+        if args.name not in list(dict_enquete.keys()):
+            dict_enquete[args.name] = Enquete(args.name)
+            save_object(dict_enquete, 'enquete_data')
+        else:
+            print(f'{args.name} existe déjà')
 
     if args.preuve:
         if args.name:
