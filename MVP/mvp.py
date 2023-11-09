@@ -90,8 +90,11 @@ if __name__ == '__main__':
 
     if args.name:
         if args.preuve:
-            dict_enquete[args.name].preuve.append(args.preuve)
-            save_object(dict_enquete, FICHIER_SAUVEGARDE)
+            try:
+                dict_enquete[args.name].preuve.append(args.preuve)
+                save_object(dict_enquete, FICHIER_SAUVEGARDE)
+            except KeyError:
+                print(f'L\'enquête {args.name} n\'existe pas')
         else:
             if args.name not in list(dict_enquete.keys()):
                 dict_enquete[args.name] = Enquete(args.name)
