@@ -35,17 +35,22 @@ class Enquete:
 
 
 def save_object(obj, filename):
-    with open(filename, 'wb') as outp:  # Overwrites any existing file.
+    """
+    PRE : - obj est un objet a sauvegarder
+          - filename est un fichier où sauvegarder un objet
+    POST : Sauvegarde un objet dans un fichier
+    """
+    with open(filename, 'wb') as outp:
         pickle.dump(obj, outp, pickle.HIGHEST_PROTOCOL)
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--name', type=str, metavar='name :',
-                        help='le nom de l\'enquête a crée ou a ajouté une preuve')
+    parser = argparse.ArgumentParser(description='Ce programme permet d\'encoder des nouvelles enquêtes et d\'encoder des preuves dans une enquête en particulier. Il permet également d\'afficher toutes les enquêtes ainsi que leur informations respectives.')
+    parser.add_argument('--name', type=str, metavar='name',
+                        help='le nom de l\'enquête a créer ou le nom de l\'enquête où il faut ajouter une preuve')
     parser.add_argument('--affichage', action='store_true',
-                        help='permet d\'afficher les enquêtes')
-    parser.add_argument('--preuve', metavar='preuve :', help='la preuve a ajouté')
+                        help='affiche les enquêtes et leurs informations respectives')
+    parser.add_argument('--preuve', metavar='preuve', help='le nom de la preuve qui est ajoutée à une enquête')
 
     args = parser.parse_args()
 
@@ -68,12 +73,12 @@ if __name__ == '__main__':
     if args.preuve:
         if args.name:
             dict_enquete[args.name].preuve.append(args.preuve)
+            save_object(dict_enquete, 'enquete_data')
         else:
             print('Aucune enquête choisie')
 
     if args.affichage:
         if len(dict_enquete) != 0:
-            print(dict_enquete) #debug
             for enquete in dict_enquete.keys():
                 print(dict_enquete[enquete])
         else:
