@@ -4,7 +4,12 @@ import pickle
 dict_enquete = {}
 FICHIER_SAUVEGARDE = 'enquete_data'
 
+
 class Enquete:
+    """
+    POST : Un objet où stocké toutes les informations d'une enquête
+    """
+
     def __init__(self, nom: str):
         self.__nom = nom
         self.__preuve = []
@@ -12,22 +17,39 @@ class Enquete:
 
     @property
     def nom(self):
+        """
+        POST : Revoie la nom de l'enquête
+        """
         return self.__nom
 
     @property
     def preuve(self):
+        """
+        POST : Renvoie la liste des preuves de l'enquête
+        """
         return self.__preuve
 
     @preuve.setter
     def preuve(self, preuve):
+        """
+        PRE : Une preuve à ajouter à l'enquête
+        POST : Ajoute une preuve à la liste des preuves de l'enquête
+        """
         self.__preuve.append(preuve)
 
     @property
     def etat(self):
+        """
+        POST : Renvoie l'état de l'enquête
+        """
         return self.__etat
 
     @etat.setter
     def etat(self, etat: str):
+        """
+        PRE : L'état a assigner a une enquête
+        POST : Assigne un nouvelle état a l'enquête
+        """
         self.__etat = etat
 
     def __str__(self):
@@ -51,7 +73,8 @@ if __name__ == '__main__':
                         help='le nom de l\'enquête a créer ou le nom de l\'enquête où il faut ajouter une preuve')
     parser.add_argument('--affichage', action='store_true',
                         help='affiche les enquêtes et leurs informations respectives')
-    parser.add_argument('--preuve', metavar='preuve', help='le nom de la preuve qui est ajoutée à une enquête')
+    parser.add_argument('--preuve', metavar='preuve',
+                        help='le nom de la preuve qui est ajoutée à une enquête choisie avec --name')
 
     args = parser.parse_args()
 
