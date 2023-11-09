@@ -97,7 +97,7 @@ if __name__ == '__main__':
                 dict_enquete[args.name] = Enquete(args.name)
                 save_object(dict_enquete, FICHIER_SAUVEGARDE)
             else:
-                print(f'{args.name} existe déjà')
+                print(f'L\'enquête {args.name} existe déjà')
     elif not args.affichage:
         print('Aucune enquête choisie')
 
