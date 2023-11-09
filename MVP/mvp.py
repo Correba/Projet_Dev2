@@ -3,7 +3,7 @@ import argparse
 import pickle
 
 dict_enquete = {}
-FICHIER_SAUVEGARDE = 'enquete_data'
+FICHIER_SAUVEGARDE = 'enquete_data.txt'
 
 
 class Enquete:
@@ -80,27 +80,26 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     try:
-        with open('enquete_data', 'rb') as input_file:
+        with open(FICHIER_SAUVEGARDE, 'rb') as input_file:
             dict_enquete = pickle.load(input_file)
 
     except FileNotFoundError:
-        print('Fichier Introuvable')
+        pass
     except IOError:
         print('Erreur IO')
 
-    if args.name and not args.preuve:
-        if args.name not in list(dict_enquete.keys()):
-            dict_enquete[args.name] = Enquete(args.name)
-            save_object(dict_enquete, FICHIER_SAUVEGARDE)
-        else:
-            print(f'{args.name} existe déjà')
-
-    if args.preuve:
-        if args.name:
+    if args.name:
+        if args.preuve:
             dict_enquete[args.name].preuve.append(args.preuve)
             save_object(dict_enquete, FICHIER_SAUVEGARDE)
         else:
-            print('Aucune enquête choisie')
+            if args.name not in list(dict_enquete.keys()):
+                dict_enquete[args.name] = Enquete(args.name)
+                save_object(dict_enquete, FICHIER_SAUVEGARDE)
+            else:
+                print(f'{args.name} existe déjà')
+    elif not args.affichage:
+        print('Aucune enquête choisie')
 
     if args.affichage:
         if len(dict_enquete) != 0:
