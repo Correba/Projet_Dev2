@@ -1,0 +1,2 @@
+Pour la première itération de ce projet, nous développerons un programme simple qui représentera adéquatement l'essence du projet. Cette itération permettra à l'utilisateur d'encoder de nouvelles enqûetes via une interface en ligne de commande. Chaque enqûete contiendra son nom, une liste de preuves, et un indicateur d'état. Des preuves pourront être encodées dans la liste de l'enqûete souhaitée.
+Le programme aura également la possibilité d'afficher toutes les enqûetes et leurs informations respectives.
