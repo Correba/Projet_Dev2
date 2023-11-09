@@ -1,12 +1,12 @@
 import argparse
 import pickle
 
-dict_enquete = dict()  # Ceci est un commentaire
+dict_enquete = {}  # Ceci est un commentaire
 
 class Enquete:
     def __init__(self, nom: str):
         self.__nom = nom
-        self.__preuve = list()
+        self.__preuve = []
         self.__etat = 'En cours'
 
     @property
@@ -44,7 +44,8 @@ def save_object(obj, filename):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Ce programme permet d\'encoder des nouvelles enquêtes et d\'encoder des preuves dans une enquête en particulier. Il permet également d\'afficher toutes les enquêtes ainsi que leur informations respectives.')
+    parser = argparse.ArgumentParser(
+        description='Ce programme permet d\'encoder des nouvelles enquêtes et d\'encoder des preuves dans une enquête en particulier. Il permet également d\'afficher toutes les enquêtes ainsi que leur informations respectives.')
     parser.add_argument('--name', type=str, metavar='name',
                         help='le nom de l\'enquête a créer ou le nom de l\'enquête où il faut ajouter une preuve')
     parser.add_argument('--affichage', action='store_true',
@@ -78,7 +79,6 @@ if __name__ == '__main__':
 
     if args.affichage:
         if len(dict_enquete) != 0:
-            print(dict_enquete) #debug
             for enquete in dict_enquete.keys():
                 print(dict_enquete[enquete])
         else:
