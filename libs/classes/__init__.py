@@ -9,7 +9,8 @@ import datetime
 
 class EmptyValue(Exception):
     """An error for an empty value"""
-    super()
+    def __init__(self, message=None):
+        super().__init__(message)
 
 
 class Investigation:
@@ -172,7 +173,11 @@ class Person:
         """
         self.__lastname = lastname
         self.__firstname = firstname
-        self.__birthdate = birthdate
+        if birthdate <= datetime.date.today():
+            self.__birthdate = birthdate
+        else:
+            raise ValueError('Birthdate cannot be in the future')
+
         self.__gender = gender
 
     @property
