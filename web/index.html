@@ -2,8 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Bureau d'enquêtes</title>
-    <script src="js/utils.js"></script>
+    <title>Table of investigations</title>
     <script src="js/tabs.js"></script>
     <script src="js/main.js"></script>
     <link href="css/main.css" rel="styleSheet">
@@ -11,31 +10,16 @@
 <body>
 <main>
     <div class="tab">
-        <button class="tablinks" id="sommaire" onclick="changerTab(this)">Sommaire</button>
-        <button class="tablinks" id="exemple" onclick="changerTab(this)">Exemples ancien sujet</button>
-        <button class="tablinks" id="TP10" onclick="changerTab(this)">TP10</button>
-        <button class="tablinks" id="TP11" onclick="changerTab(this)">TP11</button>
-        <button class="tablinks" id="TP12" onclick="changerTab(this)">TP12</button>
+        <button class="tablinks" id="investigations" onclick="changeTab(this)">Investigations</button>
+        <button class="tablinks" id="encode_investigation" onclick="changeTab(this)">Encode investigations</button>
     </div>
 
-    <section id="aff_sommaire" class="tabcontent">
-        <h1>A compléter</h1>
+    <section id="aff_investigations" class="tabcontent">
+        <h1>Tab where all the investigations are displayed</h1>
     </section>
 
-    <section id="aff_exemple" class="tabcontent">
-        <h1>A compléter</h1>
-    </section>
-
-    <section id="aff_TP10" class="tabcontent">
-        <h1>A compléter</h1>
-    </section>
-
-    <section id="aff_TP11" class="tabcontent">
-        <h1>A compléter</h1>
-    </section>
-
-    <section id="aff_TP12" class="tabcontent">
-        <h1>A compléter</h1>
+    <section id="aff_encode_investigation" class="tabcontent">
+        <h1>Tab where you can encode an investigation</h1>
     </section>
 </main>
 </body>
