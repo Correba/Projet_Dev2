@@ -119,7 +119,8 @@ class Evidence:
 class Recording(Evidence):
     """A class for recording type evidences"""
 
-    def __init__(self, name: str, description: str = '', date: datetime = datetime.date.today(), file: str = '', recording_type: str = ''):
+    def __init__(self, name: str, description: str = '', date: datetime = datetime.date.today(),
+                 file: str = '', recording_type: str = ''):
         super().__init__(name, description, date, file)
         if recording_type == '':
             raise EmptyValue('Missing type of recording')
@@ -163,7 +164,8 @@ class Picture(Object):
 class Person:
     """A class for people ivolved in the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(), gender: str = ''):
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+                 gender: str = ''):
         """
         :pre:
         - lastname : The lastname of the person
@@ -212,7 +214,8 @@ class Person:
 class Witness(Person):
     """A class for the witnesses of the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(), gender: str = '', testimony: str = '', contact: str = ''):
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+                 gender: str = '', testimony: str = '', contact: str = ''):
         super().__init__(lastname, firstname, birthdate, gender)
         self.__testimony = testimony
         self.__contact = contact
@@ -235,7 +238,9 @@ class Witness(Person):
 class Victim(Witness):
     """A class for the victims of the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(), gender: str = '', testimony: str = '', contact: str = '', condition: str = '', circumstance: str = ''):
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+                 gender: str = '', testimony: str = '', contact: str = '', condition: str = '',
+                 circumstance: str = ''):
         super().__init__(lastname, firstname, birthdate, gender, testimony, contact)
         self.__condition = condition
         self.__circumstance = circumstance
@@ -258,7 +263,8 @@ class Victim(Witness):
 class Suspect(Person):
     """A class for the suspects of the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(), gender: str = '', picture: str = '', suspicion: str = '', criminal_record: str = ''):
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+                 gender: str = '', picture: str = '', suspicion: str = '', criminal_record: str = ''):
         super().__init__(lastname, firstname, birthdate, gender)
         self.__picture = picture
         self.__suspicion = suspicion
@@ -289,7 +295,9 @@ class Suspect(Person):
 class Culprit(Suspect):
     """A class for the culprits of the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(), gender: str = '', picture: str = '', suspicion: str = '', criminal_record: str = '', motivation: str = '', victim_relationship: str = ''):
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+                 gender: str = '', picture: str = '', suspicion: str = '', criminal_record: str = '',
+                 motivation: str = '', victim_relationship: str = ''):
         super().__init__(lastname, firstname, birthdate, gender, picture, suspicion, criminal_record)
         self.__motivation = motivation
         self.__victim_relationship = victim_relationship
