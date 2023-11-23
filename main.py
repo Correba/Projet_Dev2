@@ -1,6 +1,8 @@
-from libs.classes import Investigation
-
-investigation1 = Investigation("test1")
+"""import nécessaire au script"""
+import eel
+# from libs.classes.investigation import *
 
 if __name__ == "__main__":
-    print(investigation1)
+    eel.init('web')
+
+    eel.start('index.html')
