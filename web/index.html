@@ -15,22 +15,34 @@
     </div>
 
     <section id="aff_investigations" class="tabcontent">
-        <h1>Table where all the investigations are displayed</h1>
+        <h1>Tab where all the investigations are displayed</h1>
+
+        <div id="investigationTable">
+            <table>
+                <thead id="thead">
+                </thead>
+                <tbody id="tbody">
+                </tbody>
+            </table>
+        </div>
     </section>
 
     <section id="aff_encode_investigation" class="tabcontent">
-        <h1>Table where you can encode an investigation</h1>
-        <form id="addInvestigation" action=# onsubmit='return false;'>
+        <h1>Tab where you can encode an investigation</h1>
+        <form id="addInvestigation" action=# onsubmit="investigationTable()">
             <fieldset>
                 <legend>Add investigation</legend>
 
                 <label for="investigationName">Investigation name : </label>
-                <input type="text" id="investigationName" name="investigationName">
+                <input type="text" id="investigationName" name="investigationName" value="">
                 <br><br>
 
                 <input type="submit" id="saveInvestigation" value="Encode investigation">
             </fieldset>
         </form>
+
+        <div id="confirmation">
+        </div>
     </section>
 </main>
 </body>
