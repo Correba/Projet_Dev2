@@ -12,6 +12,7 @@
     <div class="tab">
         <button class="tablinks" id="investigations" onclick="changeTab(this)">Investigations</button>
         <button class="tablinks" id="encode_investigation" onclick="changeTab(this)">Encode investigations</button>
+        <button class="tablinks" id="encode_proofs" onclick="changeTab(this)">Encode proofs</button>
     </div>
 
     <section id="aff_investigations" class="tabcontent">
@@ -29,7 +30,7 @@
 
     <section id="aff_encode_investigation" class="tabcontent">
         <h1>Tab where you can encode an investigation</h1>
-        <form id="addInvestigation" action=# onsubmit="investigationTable()">
+        <form id="addInvestigation" action=# onsubmit="addInvestigation()">
             <fieldset>
                 <legend>Add investigation</legend>
 
@@ -41,8 +42,35 @@
             </fieldset>
         </form>
 
-        <div id="confirmation">
+        <div id="confirmation_investigation">
         </div>
+    </section>
+
+    <section id="aff_encode_proofs" class="tabcontent">
+        <h1>Tab where you can encode proofs</h1>
+        <form id="addProofs" action=# onsubmit="addProof()">
+            <fieldset>
+                <legend>Add proofs</legend>
+
+                <p>
+                    <label for="investigation_select">Choose an investigation : </label>
+                    <select name="investigations" id="investigation_select">
+                    </select>
+                </p>
+
+                <p>
+                    <label for="proofsName"> Proofs Names : </label>
+                    <input type="text" id="proofsName">
+                </p>
+
+                <input type="submit" id="saveProofs" value="Encode proofs">
+            </fieldset>
+
+        </form>
+
+        <div id="confirmation_proof">
+        </div>
+
     </section>
 </main>
 </body>

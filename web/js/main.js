@@ -8,33 +8,62 @@ function getId(id) {
     return document.getElementById(id);
 }
 
-// Function to confirm the add of an investigation
-function confirmation() {
+// Function that add an investigation in the investigation table and confirms it
+function confirmationInvestigation() {
     event.preventDefault();
     let investigation = {
-        name : getId("investigationName").value,
-        state : "fonctionnal"
+        "name" : getId("investigationName").value,
+        "proofs" : [],
+        "state" : "fonctionnal"
     }
     investigations.push(investigation);
 
 
-    let id = getId("confirmation")
-    id.innerHTML = "<p>The investigation <i>" + getId("investigationName").value + "</i>  been added</p>";
+    let confirmationInvest = getId("confirmation_investigation")
+    confirmationInvest.innerHTML = "<p>The investigation <i>" + getId("investigationName").value + "</i>  been added</p>";
 
 }
 
 //Add investigation in investigation table
-function investigationTable() {
-    confirmation();
+function addInvestigation() {
+    confirmationInvestigation();
+
+    //Creates the table of the investigations
     let thead = getId("thead");
-    thead.innerHTML = "<th>Name</th><th>Sate</th>";
+    thead.innerHTML = "<th>Name</th><th>Proof(s)</th><th>Sate</th>";
     let tbody = getId("tbody");
     tbody.innerHTML = "";
     for(let i in investigations) {
-        tbody.innerHTML += "<tr><td>" + investigations[i]["name"] + "</td><td>" + investigations[i]["state"] + "</td>";
+        tbody.innerHTML += "<tr><td>" + investigations[i]["name"] + "</td><td>" + investigations[i]["proofs"] + "</td><td>" + investigations[i]["state"] + "</td>";
     }
 
+    //Create the list of investigations for encoding the proofs after
+    let inputSelect = getId("investigation_select");
+    inputSelect.innerHTML = "<option>--Please choose an option--</option>"
+    for(let a in investigations) {
+        inputSelect.innerHTML += "<option value=" + investigations[a]["name"] + ">" + investigations[a]["name"] + "</option>"
+    }
+
+}
+
+//Function that add the proof(s) in the proof table and the right investigation, and confirms it
+function confirmationProof() {
+    event.preventDefault();
+
+    for(let i in investigations) {
+        if (investigations[i]["name"] === getId("investigation_select").value) {
+            investigations[i]["proofs"].push(getId("proofsName").value)
+        }
+    }
+
+    let confirmationProof = getId("confirmation_proof");
+    confirmationProof.innerHTML = "<p>The proofs are added</p>"
+}
 
 
-    return false;
+//Add proof in proof table
+function addProof() {
+    confirmationProof();
+
+    console.log(investigations);
 }
