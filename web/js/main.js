@@ -24,18 +24,25 @@ function confirmationInvestigation() {
 
 }
 
-//Add investigation in investigation table
-function addInvestigation() {
-    confirmationInvestigation();
-
-    //Creates the table of the investigations
+//Creates the table of the investigations
+function createTabInvest() {
     let thead = getId("thead");
     thead.innerHTML = "<th>Name</th><th>Proof(s)</th><th>Sate</th>";
     let tbody = getId("tbody");
     tbody.innerHTML = "";
     for(let i in investigations) {
-        tbody.innerHTML += "<tr><td>" + investigations[i]["name"] + "</td><td>" + investigations[i]["proofs"] + "</td><td>" + investigations[i]["state"] + "</td>";
+        tbody.innerHTML += "<tr><td>" + investigations[i]["name"] + "</td><td>" + investigations[i]["proofs"].length + "</td><td>" + investigations[i]["state"] + "</td>";
     }
+}
+
+
+//Add investigation in investigation table
+function addInvestigation() {
+    //Confirms the add of the investigation in the investigation table
+    confirmationInvestigation();
+
+    //Creates the table of investigations
+    createTabInvest();
 
     //Create the list of investigations for encoding the proofs after
     let inputSelect = getId("investigation_select");
@@ -63,7 +70,10 @@ function confirmationProof() {
 
 //Add proof in proof table
 function addProof() {
+    //Confirms the add of the proof(s) in the right investigation
     confirmationProof();
 
+    //Creates the table of investigations
+    createTabInvest();
     console.log(investigations);
 }
