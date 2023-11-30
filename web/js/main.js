@@ -10,7 +10,7 @@ function getId(id) {
 
 // Function that add an investigation in the investigation table and confirms it
 function confirmationInvestigation() {
-    event.preventDefault();
+    
     let investigation = {
         "name" : getId("investigationName").value,
         "proofs" : [],
@@ -51,13 +51,10 @@ function addInvestigation() {
     for(let a in investigations) {
         inputSelect.innerHTML += "<option value=" + investigations[a]["name"] + ">" + investigations[a]["name"] + "</option>"
     }
-
 }
 
 //Function that add the proof(s) in the right investigation and confirms it
 function confirmationProof() {
-    event.preventDefault();
-
     for(let i in investigations) {
         if (investigations[i]["name"] === getId("investigation_select").value) {
             investigations[i]["proofs"].push(getId("proofsName").value)
@@ -96,6 +93,7 @@ function addProof() {
     //Creates the table of investigations
     createTabInvest();
     //console.log(investigations);
+
 
 }
 
