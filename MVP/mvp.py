@@ -3,7 +3,7 @@ import argparse
 import pickle
 
 dict_enquete = {}
-FICHIER_SAUVEGARDE = 'enquete_data.txt'
+FICHIER_SAUVEGARDE = 'enquete_data.bin'
 
 
 class Enquete:
