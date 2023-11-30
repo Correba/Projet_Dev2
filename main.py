@@ -1,6 +1,6 @@
-"""import nécessaire au script"""
-import pickle
+"""Module to use html as a GUI"""
 
+import pickle
 import eel
 
 INVESTIGATIONS = {}
