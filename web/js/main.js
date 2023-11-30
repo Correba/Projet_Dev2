@@ -3,19 +3,14 @@
 //Table of investigations
 let investigations = [];
 
-//Function to get the id
-function getId(id) {
-    return document.getElementById(id);
-}
-
 // Function that add an investigation in the investigation table and confirms it
 function confirmationInvestigation() {
-    
+
     let investigation = {
-        "name" : getId("investigationName").value,
-        "proofs" : [],
-        "persons" : {},
-        "state" : "fonctionnal"
+        "name": getId("investigationName").value,
+        "proofs": [],
+        "persons": {},
+        "state": "fonctionnal"
     }
     investigations.push(investigation);
 
@@ -31,8 +26,8 @@ function createTabInvest() {
     thead.innerHTML = "<th>Name</th><th>Proof(s)</th><th>Person(s)</th><th>Sate</th>";
     let tbody = getId("tbodyInvest");
     tbody.innerHTML = "";
-    for(let i in investigations) {
-        tbody.innerHTML += "<tr id='" + investigations[i]["name"] +  "'><td>" + investigations[i]["name"] + "</td><td onclick=\"createTabProofs('"+ investigations[i]["name"] +"')\">" + investigations[i]["proofs"].length + "</td><td>" + Object.keys(investigations[i]["persons"]).length + "</td><td>" + investigations[i]["state"] + "</td>";
+    for (let i in investigations) {
+        tbody.innerHTML += "<tr id='" + investigations[i]["name"] + "'><td>" + investigations[i]["name"] + "</td><td onclick=\"createTabProofs('" + investigations[i]["name"] + "')\">" + investigations[i]["proofs"].length + "</td><td>" + Object.keys(investigations[i]["persons"]).length + "</td><td>" + investigations[i]["state"] + "</td>";
     }
 }
 
@@ -48,14 +43,14 @@ function addInvestigation() {
     //Create the list of investigations for encoding the proofs after
     let inputSelect = getId("investigation_select");
     inputSelect.innerHTML = "<option>--Please choose an option--</option>"
-    for(let a in investigations) {
+    for (let a in investigations) {
         inputSelect.innerHTML += "<option value=" + investigations[a]["name"] + ">" + investigations[a]["name"] + "</option>"
     }
 }
 
 //Function that add the proof(s) in the right investigation and confirms it
 function confirmationProof() {
-    for(let i in investigations) {
+    for (let i in investigations) {
         if (investigations[i]["name"] === getId("investigation_select").value) {
             investigations[i]["proofs"].push(getId("proofsName").value)
         }
@@ -66,7 +61,7 @@ function confirmationProof() {
 }
 
 
-function createTabProofs (investName) {
+function createTabProofs(investName) {
     let titleProofTable = getId("title_proof_table");
     titleProofTable.innerHTML = "Tab where all the proofs are displayed";
 
@@ -96,7 +91,6 @@ function addProof() {
 
 
 }
-
 
 
 //Add persons in the right investigation
