@@ -14,6 +14,7 @@ function confirmationInvestigation() {
     let investigation = {
         "name" : getId("investigationName").value,
         "proofs" : [],
+        "persons" : {},
         "state" : "fonctionnal"
     }
     investigations.push(investigation);
@@ -26,17 +27,17 @@ function confirmationInvestigation() {
 
 //Creates the table of the investigations
 function createTabInvest() {
-    let thead = getId("thead");
-    thead.innerHTML = "<th>Name</th><th>Proof(s)</th><th>Sate</th>";
-    let tbody = getId("tbody");
+    let thead = getId("theadInvest");
+    thead.innerHTML = "<th>Name</th><th>Proof(s)</th><th>Person(s)</th><th>Sate</th>";
+    let tbody = getId("tbodyInvest");
     tbody.innerHTML = "";
     for(let i in investigations) {
-        tbody.innerHTML += "<tr><td>" + investigations[i]["name"] + "</td><td>" + investigations[i]["proofs"].length + "</td><td>" + investigations[i]["state"] + "</td>";
+        tbody.innerHTML += "<tr id='" + investigations[i]["name"] +  "'><td>" + investigations[i]["name"] + "</td><td onclick=\"createTabProofs('"+ investigations[i]["name"] +"')\">" + investigations[i]["proofs"].length + "</td><td>" + Object.keys(investigations[i]["persons"]).length + "</td><td>" + investigations[i]["state"] + "</td>";
     }
 }
 
 
-//Add investigation in investigation table
+//Confirms the add of the investigation, reset invetigation table and add investigation in list of form for the proofs
 function addInvestigation() {
     //Confirms the add of the investigation in the investigation table
     confirmationInvestigation();
@@ -53,7 +54,7 @@ function addInvestigation() {
 
 }
 
-//Function that add the proof(s) in the proof table and the right investigation, and confirms it
+//Function that add the proof(s) in the right investigation and confirms it
 function confirmationProof() {
     event.preventDefault();
 
@@ -64,16 +65,43 @@ function confirmationProof() {
     }
 
     let confirmationProof = getId("confirmation_proof");
-    confirmationProof.innerHTML = "<p>The proofs are added</p>"
+    confirmationProof.innerHTML = "<p>The proofs are added</p>";
 }
 
 
-//Add proof in proof table
+function createTabProofs (investName) {
+    let titleProofTable = getId("title_proof_table");
+    titleProofTable.innerHTML = "Tab where all the proofs are displayed";
+
+    let tbody = getId("tbodyProof");
+    tbody.innerHTML = "";
+    for (let a in investigations) {
+        if (investigations[a]["name"] === investName) {
+            let count = 1;
+            for (let x in investigations[a]["proofs"]) {
+                tbody.innerHTML += "<tr></tr><th>Proof " + count + " : </th><td>" + investigations[a]["proofs"][x] + "</td>";
+
+                tbody.innerHTML += "</tr>";
+                count += 1;
+            }
+        }
+    }
+}
+
+//Confirms the add of the proof in the right investigation, confirms it, reset investigation table and reset proof table
 function addProof() {
     //Confirms the add of the proof(s) in the right investigation
     confirmationProof();
 
     //Creates the table of investigations
     createTabInvest();
-    console.log(investigations);
+    //console.log(investigations);
+
+}
+
+
+
+//Add persons in the right investigation
+function addPerson() {
+
 }
