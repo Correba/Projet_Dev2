@@ -51,7 +51,7 @@ def fill_table_investigations(args):
 
 
 @eel.expose
-def make_type_forms(args):
+def fill_type_forms(args):
     evidence_types = {'picture': ['location'], 'object': ['location'], 'recording': [['audio', 'video']]}
     person_types = {'suspect': ['picture', 'suspicion', 'criminal_record'], 
                     'culprit': ['picture', 'suspicion', 'criminal record', 'motivation', 'victim_relationship'],
