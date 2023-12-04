@@ -3,8 +3,10 @@
 eel.expose(getFormInfos);
 eel.expose(addElement);
 
+document.addEventListener('DOMContentLoaded', eel.table_investigations);
+
 function getFormInfos(){
-    eel.create_investigations(getId("investigationName").value)();
+    eel.create_investigations(getId("investigationName").value);
 }
 
 function addElement(id, html){

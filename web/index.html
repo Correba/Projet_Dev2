@@ -23,7 +23,7 @@
                 <thead>
                     <tr>
                         <th>Nom</th>
-                        <th>Proof(s)</th>
+                        <th>evidence</th>
                         <th>People</th>
                         <th>Status</th>
                     </tr>
@@ -40,45 +40,49 @@
                 <fieldset>
                     <legend>Create investigation</legend>
                     <label for="investigationName">Investigation name : </label>
-                    <input type="text" id="investigationName" name="investigationName" value=""><br>
+                    <input type="text" id="investigationName" name="investigationName" value="" required><br>
                     <input type="submit" value="Create">
                 </fieldset>
             </form>
             <div id="log_investigation"></div>
         </div>
-        <div id="proof">
-            <h1>Add a new proof to an investigation</h1>
-            <form id="proofForm" action=# onsubmit="addProof(); return false;">
+        <div id="evidence">
+            <h1>Add a new evidence to an investigation</h1>
+            <form id="evidenceForm" action=# onsubmit="addEvidence(); return false;">
                 <fieldset>
-                    <legend>Add a proof</legend>
-                    <label for="investigation_select">Choose an investigation : </label>
-                    <select name="investigations_select" id="investigation_select"></select><br>
-                    <label for="proofName">Proofs Names : </label>
-                    <input type="text" id="proofName" name="proofName"><br>
+                    <legend>Add a evidence</legend>
+                    <label for="evidence_select">Choose an investigation : </label>
+                    <select name="evidence_select" id="evidence_select" required></select><br>
+                    <label for="evidenceName">Evidence Names : </label>
+                    <input type="text" id="evidenceName" name="evidenceName" required><br>
                     <input type="submit" value="Add">
                 </fieldset>
             </form>
-            <div id="confirmation_proof"></div>
+            <div id="log_evidence"></div>
         </div>
         <div id="people">
             <h1>Add a new person to an investigation</h1>
-            <form id="personForm" action=# onsubmit="addPerson(); return false;">
+            <form id="peopleForm" action=# onsubmit="addPeople(); return false;">
                 <fieldset>
-                    <legend>Add persons</legend>
-                    <label for="personFirstname">Firstname : </label>
-                    <input type="text" id="personFirstname" name="personFirstname"><br>
-                    <label for="personLastname">Lastname : </label>
-                    <input type="text" id="personLastname" name="personLastname"><br>
-                    <label for="personBirthdate">Birthdate : </label>
-                    <input type="date" id="personBirthdate" name="personBirthdate"><br>
-                    <label for="personGender">Gender : </label>
-                    <select id="personGender" name="personGender">
-                        <option value="Unknown"><---!---></option>
+                    <legend>Add people</legend>
+                    <label for="people_select">Choose an investigation : </label>
+                    <select name="people_select" id="people_select" required></select><br>
+                    <label for="peopleFirstname">Firstname : </label>
+                    <input type="text" id="peopleFirstname" name="peopleFirstname" required><br>
+                    <label for="peopleLastname">Lastname : </label>
+                    <input type="text" id="peopleLastname" name="peopleLastname" required><br>
+                    <label for="peopleBirthdate">Birthdate : </label>
+                    <input type="date" id="peopleBirthdate" name="peopleBirthdate" required><br>
+                    <label for="peopleGender">Gender : </label>
+                    <select id="peopleGender" name="peopleGender">
+                        <option value="Unknown" selected><---!---></option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
-                    </select>
+                    </select><br>
+                    <input type="submit" value="Add">
                 </fieldset>
             </form>
+            <div id="log_people"></div>
         </div>
     </section>
 </main>
