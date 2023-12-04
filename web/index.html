@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <title>Table of investigations</title>
     <script type="text/javascript" src="/eel.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/tabs.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/tabs.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
     <link href="css/main.css" rel="styleSheet">
 </head>
@@ -53,8 +53,17 @@
                     <legend>Add a evidence</legend>
                     <label for="evidence_select">Choose an investigation : </label>
                     <select name="evidence_select" id="evidence_select" required></select><br>
-                    <label for="evidenceName">Evidence Names : </label>
+                    <label for="evidenceName">Evidence names : </label>
                     <input type="text" id="evidenceName" name="evidenceName" required><br>
+                    <label for="evidenceDescription">Evidence description : </label>
+                    <input type="text" id="evidenceDescription" name="evidenceDescription" required><br>
+                    <label for="evidenceDate">Evidence date : </label>
+                    <input type="date" id="evidenceDate" name="evidenceDate" required><br>
+                    <label for="evidenceFile">Evidence file : </label>
+                    <input type="file" id="evidenceFile" name="evidenceFile" required><br>
+                    <label for="evidenceType">Evidence type : </label>
+                    <select name="evidenceType" id="evidenceType"></select><br>
+                    <div id="evidenceExtra"></div>
                     <input type="submit" value="Add">
                 </fieldset>
             </form>
@@ -79,6 +88,9 @@
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select><br>
+                    <label for="peopleType">Type of person of interest : </label>
+                    <select name="peopleType" id="peopleType"></select>
+                    <div id="peopleExtra"></div>
                     <input type="submit" value="Add">
                 </fieldset>
             </form>

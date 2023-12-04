@@ -3,14 +3,31 @@
 eel.expose(getFormInfos);
 eel.expose(addElement);
 
-document.addEventListener('DOMContentLoaded', eel.table_investigations);
+document.addEventListener('DOMContentLoaded', eel.fill_table_investigations);
+document.addEventListener('DOMContentLoaded', eel.make_type_forms)
+document.addEventListener('DOMContentLoaded',  setMaxDate)
 
 function getFormInfos(){
-    eel.create_investigations(getId("investigationName").value);
+    eel.create_investigations(getId('investigationName').value);
 }
 
 function addElement(id, html){
     getId(id).innerHTML = html;
+}
+
+function setMaxDate() {
+    let today = new Date();
+    let day = today.getDate();
+    let month = today.getMonth() + 1; //January is 0!
+    let year = today.getFullYear();
+
+    if (day < 10) {
+        day = '0' + day;
+    }
+    if (month < 10) {
+        month = '0' + month;
+    }
+    document.querySelectorAll('input[type="date"]').forEach(x => x.setAttribute("max", `${year}-${month}-${day}`));
 }
 
 /*
