@@ -1,6 +1,19 @@
 "use strict";
 
+eel.expose(getFormInfos);
+eel.expose(addElement);
+
+function getFormInfos(){
+    eel.create_investigations(getId("investigationName").value)();
+}
+
+function addElement(id, html){
+    getId(id).innerHTML = html;
+}
+
+/*
 //Table of investigations
+
 let investigations = [];
 
 // Function that add an investigation in the investigation table and confirms it
@@ -97,3 +110,4 @@ function addProof() {
 function addPerson() {
 
 }
+ */

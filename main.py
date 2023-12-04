@@ -4,11 +4,13 @@ import pickle
 
 import eel
 
+from libs.classes.investigation import *
+
+eel.init('web')
+
 INVESTIGATIONS = {}
 BACKUP_FILE = 'investigations_data.bin'
 
-
-# from libs.classes.investigation import *
 
 def save_object():
     """
@@ -27,7 +29,20 @@ def read_save_file():
         print('File not found')
 
 
-if __name__ == "__main__":
-    eel.init('web')
+@eel.expose
+def create_investigations(element):
+    INVESTIGATIONS[element] = Investigation(element)
+    save_object()
+    # table_investigations()
 
+
+@eel.expose
+def table_investigations():
+    investigation_id = "investigationContent"
+    html = "<tr>test</tr>"
+    eel.addElement(investigation_id, html)
+
+
+if __name__ == '__main__':
+    read_save_file()
     eel.start('index.html', mode="browser")
