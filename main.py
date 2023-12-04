@@ -10,15 +10,21 @@ BACKUP_FILE = 'investigations_data.bin'
 
 # from libs.classes.investigation import *
 
-def save_object(obj, filename):
+def save_object():
     """
-    :pre:
-    - obj is the object to save
-    - filename is the file where the object is saved
-    :post: save an object in a file
+    POST: save an INVESTIGATIONS in BACKUP_FILE
     """
-    with open(filename, 'wb') as output:
-        pickle.dump(obj, output, pickle.HIGHEST_PROTOCOL)
+    with open(BACKUP_FILE, 'wb') as output:
+        pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
+
+
+def read_save_file():
+    try:
+        with open(BACKUP_FILE, 'rb') as input_file:
+            global INVESTIGATIONS
+            INVESTIGATIONS = pickle.load(input_file)
+    except FileNotFoundError:
+        print('File not found')
 
 
 if __name__ == "__main__":

@@ -3,91 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <title>Table of investigations</title>
+    <script type="text/javascript" src="/eel.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/tabs.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
     <link href="css/main.css" rel="styleSheet">
 </head>
 <body>
 <main>
     <div class="tab">
         <button class="tablinks" id="investigations" onclick="changeTab(this)">Investigations</button>
-        <button class="tablinks" id="encode_investigation" onclick="changeTab(this)">Encode investigations</button>
-        <button class="tablinks" id="encode_proof" onclick="changeTab(this)">Encode proofs</button>
-        <button class="tablinks" id="encode_person" onclick="changeTab(this)">Encode persons</button>
+        <button class="tablinks" id="new_content" onclick="changeTab(this)">Create new content</button>
     </div>
 
     <section id="aff_investigations" class="tabcontent">
         <div id="investigationTable">
-            <h1>Tab where all the investigations are displayed</h1>
+            <h1>List of investigations</h1>
             <table>
-                <thead id="theadInvest">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Proof(s)</th>
+                        <th>People</th>
+                        <th>Status</th>
+                    </tr>
                 </thead>
-                <tbody id="tbodyInvest">
-                </tbody>
-            </table>
-        </div>
-
-
-        <div id="proofTable">
-            <h1 id="title_proof_table"></h1>
-            <table>
-                <tbody id="tbodyProof">
+                <tbody id="investigationContent">
                 </tbody>
             </table>
         </div>
     </section>
 
-    <section id="aff_encode_investigation" class="tabcontent">
-        <h1>Tab where you can encode an investigation</h1>
-        <form id="addInvestigation" action=# onsubmit="addInvestigation(); return false;">
-            <fieldset>
-                <legend>Add investigation</legend>
-                <p>
+    <section id="aff_new_content" class="tabcontent">
+        <div id="investigation">
+            <form id="investigationForm" action=# onsubmit="getFormInfos(); return false;">
+                <fieldset>
+                    <legend>Create investigation</legend>
                     <label for="investigationName">Investigation name : </label>
-                    <input type="text" id="investigationName" name="investigationName" value="">
-                </p>
-
-                <input type="submit" id="saveInvestigation" value="Encode investigation">
-            </fieldset>
-        </form>
-
-        <div id="confirmation_investigation">
+                    <input type="text" id="investigationName" name="investigationName" value=""><br>
+                    <input type="submit" value="Create">
+                </fieldset>
+            </form>
+            <div id="log_investigation"></div>
         </div>
-    </section>
-
-    <section id="aff_encode_proof" class="tabcontent">
-        <h1>Tab where you can encode proofs</h1>
-        <form id="addProof" action=# onsubmit="addProof(); return false;">
-            <fieldset>
-                <legend>Add proofs</legend>
-
-                <p>
+        <div id="proof">
+            <h1>Add a new proof to an investigation</h1>
+            <form id="proofForm" action=# onsubmit="addProof(); return false;">
+                <fieldset>
+                    <legend>Add a proof</legend>
                     <label for="investigation_select">Choose an investigation : </label>
-                    <select name="investigations" id="investigation_select">
-                    </select>
-                </p>
-
-                <p>
-                    <label for="proofsName"> Proofs Names : </label>
-                    <input type="text" id="proofsName">
-                </p>
-
-                <input type="submit" id="saveProofs" value="Encode proofs">
-            </fieldset>
-        </form>
-
-        <div id="confirmation_proof">
+                    <select name="investigations_select" id="investigation_select"></select><br>
+                    <label for="proofName">Proofs Names : </label>
+                    <input type="text" id="proofName" name="proofName"><br>
+                    <input type="submit" value="Add">
+                </fieldset>
+            </form>
+            <div id="confirmation_proof"></div>
         </div>
-    </section>
-
-    <section id="aff_encode_person" class="tabcontent">
-        <h1>Tab where you can encode persons</h1>
-        <form id="addPeson" action=# onsubmit="addPerson(); return false;">
-            <fieldset>
-                <legend>Add persons</legend>
-            </fieldset>
-        </form>
+        <div id="people">
+            <h1>Add a new person to an investigation</h1>
+            <form id="personForm" action=# onsubmit="addPerson(); return false;">
+                <fieldset>
+                    <legend>Add persons</legend>
+                    <label for="personFirstname">Firstname : </label>
+                    <input type="text" id="personFirstname" name="personFirstname"><br>
+                    <label for="personLastname">Lastname : </label>
+                    <input type="text" id="personLastname" name="personLastname"><br>
+                    <label for="personBirthdate">Birthdate : </label>
+                    <input type="date" id="personBirthdate" name="personBirthdate"><br>
+                    <label for="personGender">Gender : </label>
+                    <select id="personGender" name="personGender">
+                        <option value="Unknown"><---!---></option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </fieldset>
+            </form>
+        </div>
     </section>
 </main>
 </body>

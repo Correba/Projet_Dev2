@@ -10,6 +10,7 @@ class Investigation:
         """
         self.__name = name
         self.__evidence = []
+        self.__people = []
         self.__status = status
 
     @property
@@ -34,6 +35,20 @@ class Investigation:
         self.__evidence.append(evidence)
 
     @property
+    def people(self):
+        """
+        :post: Returns the list of people of the investigation
+        """
+        return self.__evidence
+
+    def add_people(self, people):
+        """
+        :pre: An people of the investigation
+        :post: Adds a new people to the list of evidences
+        """
+        self.__people.append(people)
+
+    @property
     def status(self):
         """
         :post: Returns the status of the investigation
@@ -49,4 +64,4 @@ class Investigation:
         self.__status = status
 
     def __str__(self):
-        return f'Nom: {self.__name}, preuve: {self.__evidence}, etat: {self.__status}'
+        return f'Name: {self.__name}, proof: {self.__evidence}, person: {self.__people}, status: {self.__status}'
