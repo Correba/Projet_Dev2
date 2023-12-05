@@ -22,8 +22,8 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Nom</th>
-                        <th>evidence</th>
+                        <th>Name</th>
+                        <th>Evidences</th>
                         <th>People</th>
                         <th>Status</th>
                     </tr>
@@ -36,12 +36,12 @@
 
     <section id="aff_new_content" class="tabcontent">
         <div id="investigation">
+            <h1>Create a new investigation</h1>
             <form id="investigationForm" action=# onsubmit="getFormInfos(); return false;">
                 <fieldset>
-                    <legend>Create investigation</legend>
                     <label for="investigationName">Investigation name : </label>
                     <input type="text" id="investigationName" name="investigationName" value="" required><br>
-                    <input type="submit" value="Create">
+                    <input type="submit" value="Create investigation">
                 </fieldset>
             </form>
             <div id="log_investigation"></div>
@@ -50,10 +50,9 @@
             <h1>Add a new evidence to an investigation</h1>
             <form id="evidenceForm" action=# onsubmit="addEvidence(); return false;">
                 <fieldset>
-                    <legend>Add a evidence</legend>
                     <label for="evidence_select">Choose an investigation : </label>
                     <select name="evidence_select" id="evidence_select" required></select><br>
-                    <label for="evidenceName">Evidence names : </label>
+                    <label for="evidenceName">Evidence name : </label>
                     <input type="text" id="evidenceName" name="evidenceName" required><br>
                     <label for="evidenceDescription">Evidence description : </label>
                     <input type="text" id="evidenceDescription" name="evidenceDescription" required><br>
@@ -64,7 +63,7 @@
                     <label for="evidenceType">Evidence type : </label>
                     <select name="evidenceType" id="evidenceType" onchange="eel.make_type_input(this.value, this.id)"></select><br>
                     <div id="evidenceExtra"></div>
-                    <input type="submit" value="Add">
+                    <input type="submit" value="Add evidence">
                 </fieldset>
             </form>
             <div id="log_evidence"></div>
@@ -73,7 +72,6 @@
             <h1>Add a new person to an investigation</h1>
             <form id="peopleForm" action=# onsubmit="addPeople(); return false;">
                 <fieldset>
-                    <legend>Add people</legend>
                     <label for="people_select">Choose an investigation : </label>
                     <select name="people_select" id="people_select" required></select><br>
                     <label for="peopleFirstname">Firstname : </label>
@@ -91,7 +89,7 @@
                     <label for="peopleType">Type of person of interest : </label>
                     <select name="peopleType" id="peopleType" onchange="eel.make_type_input(this.value, this.id)"></select>
                     <div id="peopleExtra"></div>
-                    <input type="submit" value="Add">
+                    <input type="submit" value="Add person">
                 </fieldset>
             </form>
             <div id="log_people"></div>
