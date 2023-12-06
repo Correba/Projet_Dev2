@@ -48,7 +48,7 @@
         </div>
         <div id="evidence">
             <h1>Add a new evidence to an investigation</h1>
-            <form id="evidenceForm" action=# onsubmit="addEvidence(); return false;">
+            <form id="evidenceForm" action=# onsubmit="addEvidence(this); return false;">
                 <fieldset>
                     <label for="evidence_select">Choose an investigation : </label>
                     <select name="evidence_select" id="evidence_select" required></select><br>
@@ -70,7 +70,7 @@
         </div>
         <div id="people">
             <h1>Add a new person to an investigation</h1>
-            <form id="peopleForm" action=# onsubmit="addPeople(); return false;">
+            <form id="peopleForm" action=# onsubmit="addPeople(this); return false;">
                 <fieldset>
                     <label for="people_select">Choose an investigation : </label>
                     <select name="people_select" id="people_select" required></select><br>

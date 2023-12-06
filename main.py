@@ -1,8 +1,10 @@
 """Module to use html as a GUI"""
-
+import datetime
 import pickle
 import eel
-from libs.classes.investigation import *
+from libs.classes.investigation import Investigation
+from libs.classes.evidence import Evidence
+from libs.classes.person import Person
 
 eel.init('web')
 
@@ -30,11 +32,15 @@ def read_save_file():
         pass
 
 
+def update_investigation():
+    save_object()
+    fill_table_investigations()
+
+
 @eel.expose
 def create_investigations(element):
     INVESTIGATIONS[element] = Investigation(element)
-    save_object()
-    fill_table_investigations()
+    update_investigation()
 
 
 @eel.expose
@@ -42,9 +48,9 @@ def fill_table_investigations(args=None):
     read_save_file()
     html = ''
     select = ''
-    for investigation in INVESTIGATIONS.values():
-        html += f'<tr><td>{investigation.name.capitalize()}</td><td>{len(investigation.evidence)}</td><td>{len(investigation.people)}</td><td>{investigation.status}</td></tr>'
-        select += f'<option value="{investigation.name}">{investigation.name.capitalize()}</value>'
+    for investigation in list(INVESTIGATIONS.values()):
+        html += f'<tr><td>{investigation.name}</td><td>{len(investigation.evidence)}</td><td>{len(investigation.people)}</td><td>{investigation.status}</td></tr>'
+        select += f'<option value="{investigation.name}">{investigation.name}</value>'
     eel.addElement('investigationContent', html)
     eel.addElement('evidence_select', select)
     eel.addElement('people_select', select)
@@ -57,9 +63,9 @@ def fill_type_forms(args=None):
     evidence_select = '<option value="default" selected><---!---></option>'
     person_select = evidence_select
     for evidence in evidence_types:
-        evidence_select += f'<option value"{evidence}">{evidence.capitalize()}</option>'
+        evidence_select += f'<option value="{evidence}">{evidence.capitalize()}</option>'
     for person in person_types:
-        person_select += f'<option value"{person}">{person.capitalize()}</option>'
+        person_select += f'<option value="{person}">{person.capitalize()}</option>'
     eel.addElement('evidenceType', evidence_select)
     eel.addElement('peopleType', person_select)
 
@@ -67,7 +73,6 @@ def fill_type_forms(args=None):
 @eel.expose
 def make_type_input(type: str, parent_id: str, args=None):
     type_input = ''
-    type = type.lower()
     return_id = parent_id.split('T')[0] + 'Extra'
     evidence_types = {'picture': 'location', 'object': 'location', 'recording': 'recording'}
     person_types = {'suspect': ['picture', 'suspicion', 'criminal_record'],
@@ -96,6 +101,42 @@ def make_type_input(type: str, parent_id: str, args=None):
                 type_input += f'<input type="text" id="{new_id}" name="{new_id}" required><br>'
 
     eel.addElement(return_id, type_input)
+
+
+@eel.expose
+def make_evidence(chosen_type: str, chosen_investigation: str, data: list, args=None):
+    name, description, date, file, *extra = data
+    date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
+    new_evidence = None
+    match chosen_type:
+        case 'picture':
+            pass
+        case 'object':
+            pass
+        case 'recording':
+            pass
+        case _:
+            new_evidence = Evidence(name, description, date, file)
+    INVESTIGATIONS[chosen_investigation].add_evidence(new_evidence)
+    update_investigation()
+
+
+@eel.expose
+def make_person(chosen_type: str, chosen_investigation: str, data: list, args=None):
+    firstname, lastname, birthdate, gender, *extra = data
+    birthdate = datetime.datetime.strptime(birthdate, '%Y-%m-%d').date()
+    new_person = None
+    match chosen_type:
+        case 'picture':
+            pass
+        case 'object':
+            pass
+        case 'recording':
+            pass
+        case _:
+            new_person = Person(firstname, lastname, birthdate, gender)
+    INVESTIGATIONS[chosen_investigation].add_people(new_person)
+    update_investigation()
 
 
 if __name__ == '__main__':

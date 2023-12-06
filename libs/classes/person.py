@@ -4,7 +4,7 @@ import datetime
 class Person:
     """A class for people ivolved in the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime.date = datetime.date.today(),
                  gender: str = ''):
         """
         :pre:
@@ -19,7 +19,6 @@ class Person:
             self.__birthdate = birthdate
         else:
             raise ValueError('Birthdate cannot be in the future')
-
         self.__gender = gender
 
     @property

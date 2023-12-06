@@ -6,7 +6,7 @@ from witness import Witness
 class Victim(Witness):
     """A class for the victims of the investigation"""
 
-    def __init__(self, lastname: str, firstname: str, birthdate: datetime = datetime.date.today(),
+    def __init__(self, lastname: str, firstname: str, birthdate: datetime.date = datetime.date.today(),
                  gender: str = '', testimony: str = '', contact: str = '', condition: str = '',
                  circumstance: str = ''):
         super().__init__(lastname, firstname, birthdate, gender, testimony, contact)

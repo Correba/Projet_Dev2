@@ -39,7 +39,7 @@ class Investigation:
         """
         :post: Returns the list of people of the investigation
         """
-        return self.__evidence
+        return self.__people
 
     def add_people(self, people):
         """

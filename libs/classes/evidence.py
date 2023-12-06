@@ -1,12 +1,11 @@
 import datetime
-
-from empty_value import EmptyValue
+from ..classes.empty_value import EmptyValue
 
 
 class Evidence:
     """A class of evidences found in a police investigation"""
 
-    def __init__(self, name: str, description: str = '', date: datetime = datetime.date.today(), file: str = ''):
+    def __init__(self, name: str, description: str = '', date: datetime.date = datetime.date.today(), file: str = ''):
         """
         :pre:
         - name : The name of the evidence
@@ -20,7 +19,10 @@ class Evidence:
 
         self.__name = name
         self.__description = description
-        self.__date = date
+        if date <= datetime.date.today():
+            self.__date = date
+        else:
+            raise ValueError('Birthdate cannot be in the future')
         self.__file = file
 
     @property

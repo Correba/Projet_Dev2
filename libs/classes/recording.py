@@ -7,7 +7,7 @@ from evidence import Evidence
 class Recording(Evidence):
     """A class for recording type evidences"""
 
-    def __init__(self, name: str, description: str = '', date: datetime = datetime.date.today(),
+    def __init__(self, name: str, description: str = '', date: datetime.date = datetime.date.today(),
                  file: str = '', recording_type: str = ''):
         super().__init__(name, description, date, file)
         if recording_type == '':
