@@ -6,6 +6,7 @@ html {
     background-image: url("../img/sherlock.jpg");
     background-size: cover;
     background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 body {
@@ -16,7 +17,7 @@ body {
 
 h1 {
     font-family: Arial, "sans-serif";
-    margin: 20px 15px;
+    margin: 15px 20px;
     color: #cd8240;
 }
 
@@ -57,6 +58,7 @@ h1 {
 }
 
 .tabcontent {
+    min-height: 500px;
     display: none;
     padding: 0.5em 1em;
     border: 1px solid white;
@@ -74,7 +76,7 @@ form {
 }
 
 fieldset {
-    border: 1.5px solid white;
+    border: 1.5px white;
 }
 
 input {
@@ -83,9 +85,9 @@ input {
 }
 
 input[type=submit] {
-    margin: 5px;
+    margin: 15px 0 0 ;
     padding: 5px 10px;
-    background-color: #ffefe5;
+    background-color: white;
     border: 1px grey solid;
     border-radius: 5px;
 }
@@ -93,14 +95,6 @@ input[type=submit] {
 input[type=date], select {
     margin: 5px;
     padding: 4px 10px;
-}
-
-input#evidenceName {
-    margin-left: 70.5px;
-}
-
-input#evidenceDescription {
-    margin-left: 30px;
 }
 
 /* Table */
