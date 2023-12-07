@@ -49,7 +49,8 @@ def fill_table_investigations(args=None):
     html = ''
     select = ''
     for investigation in list(INVESTIGATIONS.values()):
-        html += f'<tr><td>{investigation.name}</td><td>{len(investigation.evidence)}</td><td>{len(investigation.people)}</td><td>{investigation.status}</td></tr>'
+        html += (f'<tr><td>{investigation.name}</td><td>{len(investigation.evidence)}</td>'
+                 f'<td>{len(investigation.people)}</td><td>{investigation.status}</td></tr>')
         select += f'<option value="{investigation.name}">{investigation.name}</value>'
     eel.addElement('investigationContent', html)
     eel.addElement('evidence_select', select)
@@ -60,8 +61,7 @@ def fill_table_investigations(args=None):
 def fill_type_forms(args=None):
     evidence_types = ['picture', 'object', 'recording']
     person_types = ['suspect', 'culprit', 'witness', 'victim']
-    evidence_select = '<option value="default" selected><---!---></option>'
-    person_select = evidence_select
+    evidence_select = person_select = '<option value="default" selected><---!---></option>'
     for evidence in evidence_types:
         evidence_select += f'<option value="{evidence}">{evidence.capitalize()}</option>'
     for person in person_types:
@@ -71,35 +71,49 @@ def fill_type_forms(args=None):
 
 
 @eel.expose
-def make_type_input(type: str, parent_id: str, args=None):
+def make_type_input(chosen_type: str, parent_id: str, args=None):
+    """
+    :pre:
+    - chosen_type is a string
+    - parent_id is a string
+    - args is required by eel module but is not used
+    :post: makes new HTML input tags in the HTML object identified by parent_id
+    """
     type_input = ''
-    return_id = parent_id.split('T')[0] + 'Extra'
+    chosen_element = parent_id.split('T')[0]
+    return_id = chosen_element + 'Extra'
     evidence_types = {'picture': 'location', 'object': 'location', 'recording': 'recording'}
     person_types = {'suspect': ['picture', 'suspicion', 'criminal_record'],
                     'culprit': ['picture', 'suspicion', 'criminal_record', 'motivation', 'victim_relationship'],
                     'witness': ['testimony', 'contact'],
                     'victim': ['testimony', 'contact', 'condition', 'circumstance']}
 
-    if type == 'default':
+    if chosen_type == 'default':
         eel.addElement(return_id, '')
-    elif 'evidence' in parent_id:
-        new_id = 'evidence' + type.capitalize()
-        type_input += f'<label for="{new_id}">{evidence_types[type].capitalize()} : </label>'
-        if type == 'recording':
-            type_input += f'<input type="file" accept="audio/*, video/*" id="{new_id}" name="{new_id}" required><br>'
-        else:
-            type_input += f'<input type="text" id="{new_id}" name="{new_id}" required><br>'
-    elif 'people' in parent_id:
-        for type_info in person_types[type]:
-            new_id = 'people' + type.capitalize() + type_info.capitalize()
-            type_input += f'<label for="{new_id}">{type_info.capitalize()} : </label>'
-            if type_info == 'picture':
-                type_input += f'<input type="file" accept="image/*" id="{new_id}" name="{new_id}" required><br>'
-            elif type_info == 'criminal_record':
-                type_input += f'<input type="file" id="{new_id}" name="{new_id}" required><br>'
-            else:
-                type_input += f'<input type="text" id="{new_id}" name="{new_id}" required><br>'
+        return
 
+    match chosen_element:
+        case 'evidence':
+            new_id = 'evidence' + chosen_type.capitalize()
+            type_input += f'<label for="{new_id}">{evidence_types[chosen_type].capitalize()} : </label><input '
+            match chosen_type:
+                case 'recording':
+                    type_input += 'type="file" accept="audio/*, video/*" '
+                case _:
+                    type_input += 'type="text" '
+            type_input += f'id="{new_id}" name="{new_id}" required><br>'
+        case 'people':
+            for type_info in person_types[chosen_type]:
+                new_id = 'people' + chosen_type.capitalize() + type_info.capitalize()
+                type_input += f'<label for="{new_id}">{type_info.capitalize()} : </label><input '
+                match type_info:
+                    case 'picture':
+                        type_input += 'type="file" accept="image/*" '
+                    case 'criminal_record':
+                        type_input += 'type="file" '
+                    case _:
+                        type_input += 'type="text" '
+                type_input += f'id="{new_id}" name="{new_id}" required><br>'
     eel.addElement(return_id, type_input)
 
 

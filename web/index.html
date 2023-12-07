@@ -58,8 +58,8 @@
                     <input type="text" id="evidenceDescription" name="evidenceDescription" required><br>
                     <label for="evidenceDate">Evidence date : </label>
                     <input type="date" id="evidenceDate" name="evidenceDate" required><br>
-                    <label for="evidenceFile">Evidence file : </label>
-                    <input type="file" id="evidenceFile" name="evidenceFile" required><br>
+                    <label for="evidenceFile" class="evidenceHidden">Evidence file : </label>
+                    <input type="file" id="evidenceFile" name="evidenceFile" class="evidenceHidden" required><br class="evidenceHidden">
                     <label for="evidenceType">Evidence type : </label>
                     <select name="evidenceType" id="evidenceType" onchange="eel.make_type_input(this.value, this.id)"></select><br>
                     <div id="evidenceExtra"></div>

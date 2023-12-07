@@ -3,9 +3,14 @@
 eel.expose(getFormInfos);
 eel.expose(addElement);
 
-document.addEventListener('DOMContentLoaded', eel.fill_table_investigations);
-document.addEventListener('DOMContentLoaded', eel.fill_type_forms)
-document.addEventListener('DOMContentLoaded',  setMaxDate)
+document.addEventListener('DOMContentLoaded', load);
+
+function load(){
+    eel.fill_table_investigations();
+    eel.fill_type_forms();
+    setMaxDate();
+    getId('evidenceType').addEventListener('change', recordingValue);
+}
 
 function getFormInfos(){
     eel.create_investigations(getId('investigationName').value);
