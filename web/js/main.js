@@ -12,8 +12,9 @@ function load(){
     getId('evidenceType').addEventListener('change', recordingValue);
 }
 
-function getFormInfos(){
-    eel.create_investigations(getId('investigationName').value);
+function getFormInfos(forms){
+    const new_name = forms.investigationName.value;
+    eel.create_investigations(new_name);
 }
 
 function addElement(id, html){
@@ -22,7 +23,7 @@ function addElement(id, html){
 
 function setMaxDate() {
     const today = new Date().toISOString().split('T')[0];
-    document.querySelectorAll('input[type="date"]').forEach(inputDate => inputDate.setAttribute("max", `${today}`));
+    queryAll('input[type="date"]').forEach(inputDate => inputDate.setAttribute("max", `${today}`));
 }
 
 function addEvidence(forms){
@@ -65,7 +66,7 @@ function addPeople(forms){
 
 function recordingValue(){
     const recordingTag = getId('evidenceType');
-    const hidden = document.querySelectorAll('.evidenceHidden');
+    const hidden = queryAll('.evidenceHidden');
     switch (recordingTag.value){
         case 'recording':
             recordingTag.removeAttribute('required');
