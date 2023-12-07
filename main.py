@@ -33,18 +33,31 @@ def read_save_file():
 
 
 def update_investigation():
+    """
+    :post:
+    - save an INVESTIGATIONS in BACKUP_FILE
+    - fill the HTML table with the content of the BACKUP_FILE
+    """
     save_object()
     fill_table_investigations()
 
 
 @eel.expose
 def create_investigations(element):
+    """
+    :pre: element is a string
+    :post: create an investigation named element and adds it to INVESTIGATIONS
+    """
     INVESTIGATIONS[element] = Investigation(element)
     update_investigation()
 
 
 @eel.expose
 def fill_table_investigations(args=None):
+    """
+    :pre: args is required by eel module but is not used
+    :post: fill the HTML table with the content of BACKUP_FILE
+    """
     read_save_file()
     html = ''
     select = ''
@@ -59,6 +72,12 @@ def fill_table_investigations(args=None):
 
 @eel.expose
 def fill_type_forms(args=None):
+    """
+    :pre:
+    - args is required by eel module but is not used
+    - called when the page is loaded
+    :post: fill the HTML select object of the forms
+    """
     evidence_types = ['picture', 'object', 'recording']
     person_types = ['suspect', 'culprit', 'witness', 'victim']
     evidence_select = person_select = '<option value="default" selected><---!---></option>'
@@ -119,6 +138,14 @@ def make_type_input(chosen_type: str, parent_id: str, args=None):
 
 @eel.expose
 def make_evidence(chosen_type: str, chosen_investigation: str, data: list, args=None):
+    """
+    :pre:
+    - chosen_type is a string
+    - chosen_investigation is a string
+    - data is a list containing all information related to an evidence
+    - args is required by eel module but is not used
+    :post: creates an Evidence or inheritor and adds it to the chosen_investigation in INVESTIGATIONS
+    """
     name, description, date, file, *extra = data
     date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
     new_evidence = None
@@ -137,6 +164,14 @@ def make_evidence(chosen_type: str, chosen_investigation: str, data: list, args=
 
 @eel.expose
 def make_person(chosen_type: str, chosen_investigation: str, data: list, args=None):
+    """
+    :pre:
+    - chosen_type is a string
+    - chosen_investigation is a string
+    - data is a list containing all information related to a person
+    - args is required by eel module but is not used
+    :post: creates a Person or inheritor and adds it to the chosen_investigation in INVESTIGATIONS
+    """
     firstname, lastname, birthdate, gender, *extra = data
     birthdate = datetime.datetime.strptime(birthdate, '%Y-%m-%d').date()
     new_person = None

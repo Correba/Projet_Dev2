@@ -58,7 +58,7 @@ h1 {
 }
 
 .tabcontent {
-    min-height: 500px;
+    min-height: 600px;
     display: none;
     padding: 0.5em 1em;
     border: 1px solid white;
@@ -76,7 +76,7 @@ form {
 }
 
 fieldset {
-    border: 1.5px white;
+    border: none;
 }
 
 input {
