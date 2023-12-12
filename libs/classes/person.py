@@ -1,4 +1,5 @@
 import datetime
+from empty_value import EmptyValue
 
 
 class Person:
@@ -13,8 +14,14 @@ class Person:
         - birthdate : The date the person was born
         - gender : The gender of the person
         """
-        self.__lastname = lastname
-        self.__firstname = firstname
+        if lastname:
+            self.__lastname = lastname
+        else:
+            raise EmptyValue('Lastname cannot be empty')
+        if firstname:
+            self.__firstname = firstname
+        else:
+            raise EmptyValue('Firstname cannot be empty')
         if birthdate <= datetime.date.today():
             self.__birthdate = birthdate
         else:
