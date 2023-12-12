@@ -104,17 +104,17 @@ class EvidenceTestCase(unittest.TestCase):
         """
         Test if the EmptyValue error is raised
         """
-        with self.assertRaises(EmptyValue):
+        with self.assertRaises(EmptyValue) as error_1:
             Evidence("test1")
+        self.assertEqual(error_1.exception.args[0], 'No name or file set for the evidence')
 
-        with self.assertRaises(EmptyValue):
-            Evidence("test2", "description2", datetime.date(2023, 12, 1), "")
+        with self.assertRaises(EmptyValue) as error_2:
+            Evidence("", "description2", datetime.date(2023, 12, 1), "")
+        self.assertEqual(error_2.exception.args[0], 'No name or file set for the evidence')
 
-        with self.assertRaises(EmptyValue):
+        with self.assertRaises(EmptyValue) as error_3:
             Evidence("", "description3", datetime.date(2023, 12, 1), "file3")
-
-        with self.assertRaises(EmptyValue):
-            Evidence("")
+        self.assertEqual(error_3.exception.args[0], 'No name or file set for the evidence')
 
     def test_value_error(self):
         """

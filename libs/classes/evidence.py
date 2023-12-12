@@ -15,7 +15,7 @@ class Evidence:
         :raise: if name or the file is empty raises EmptyValue error
         """
         if name == '' or file == '':
-            raise EmptyValue('No name set for the evidence')
+            raise EmptyValue('No name or file set for the evidence')
 
         self.__name = name
         self.__description = description
