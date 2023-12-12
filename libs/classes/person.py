@@ -1,9 +1,9 @@
 import datetime
-from empty_value import EmptyValue
+from ..classes.empty_value import EmptyValue
 
 
 class Person:
-    """A class for people ivolved in the investigation"""
+    """A class for people involved in the investigation"""
 
     def __init__(self, lastname: str, firstname: str, birthdate: datetime.date = datetime.date.today(),
                  gender: str = ''):
@@ -18,10 +18,12 @@ class Person:
             self.__lastname = lastname
         else:
             raise EmptyValue('Lastname cannot be empty')
+
         if firstname:
             self.__firstname = firstname
         else:
             raise EmptyValue('Firstname cannot be empty')
+
         if birthdate <= datetime.date.today():
             self.__birthdate = birthdate
         else:

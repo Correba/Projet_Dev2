@@ -22,7 +22,7 @@ class Evidence:
         if date <= datetime.date.today():
             self.__date = date
         else:
-            raise ValueError('Birthdate cannot be in the future')
+            raise ValueError('Proof date cannot be in the future')
         self.__file = file
 
     @property
