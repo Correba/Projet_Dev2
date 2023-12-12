@@ -152,10 +152,10 @@ class PersonTestCase(unittest.TestCase):
         self.assertEqual(str(person1.birthdate), "2023-12-12")
         self.assertEqual(person1.gender, "")
 
-        person2 = Person("lastname2", "firstname2", datetime.date(2000, 4, 16), "Male")
+        person2 = Person("lastname2", "firstname2", datetime.date(2000, 4, 15), "Male")
         self.assertEqual(person2.lastname, "lastname2")
         self.assertEqual(person2.firstname, "firstname2")
-        self.assertEqual(str(person2.birthdate), "2000-04-16")
+        self.assertEqual(str(person2.birthdate), "2000-04-15")
         self.assertEqual(person2.gender, "Male")
 
 
