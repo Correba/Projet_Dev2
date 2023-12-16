@@ -1,7 +1,7 @@
 import datetime
 
-from empty_value import EmptyValue
-from evidence import Evidence
+from Projet_Dev2.libs.classes.evidence import Evidence
+from Projet_Dev2.libs.classes.empty_value import EmptyValue
 
 
 class Recording(Evidence):

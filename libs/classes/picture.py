@@ -1,6 +1,6 @@
 import datetime
 
-from object import Object
+from Projet_Dev2.libs.classes.object import Object
 
 
 class Picture(Object):

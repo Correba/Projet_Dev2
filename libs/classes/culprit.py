@@ -1,6 +1,6 @@
 import datetime
 
-from suspect import Suspect
+from Projet_Dev2.libs.classes.suspect import Suspect
 
 
 class Culprit(Suspect):
