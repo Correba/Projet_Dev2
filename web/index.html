@@ -23,10 +23,10 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Evidences</th>
-                            <th>People</th>
-                            <th>Status</th>
+                            <th onclick="eel.sort_investigations('name')">Name</th>
+                            <th onclick="eel.sort_investigations('evidence')">Evidences</th>
+                            <th onclick="eel.sort_investigations('people')">People</th>
+                            <th onclick="eel.sort_investigations('status')">Status</th>
                         </tr>
                     </thead>
                     <tbody id="investigationContent">
@@ -72,6 +72,11 @@
                 <fieldset>
                     <label for="investigationName">Investigation name : </label>
                     <input type="text" id="investigationName" name="investigationName" value="" required><br>
+                    <label for="investigationStatus">Investigation status : </label>
+                    <select id="investigationStatus" name="investigationStatus">
+                        <option value="Ongoing" selected>Ongoing</option>
+                        <option value="Closed">Closed</option>
+                    </select><br>
                     <input type="submit" value="Create investigation">
                 </fieldset>
             </form>

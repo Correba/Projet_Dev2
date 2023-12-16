@@ -133,3 +133,8 @@ th {
 .error {
     color: red;
 }
+
+.selected {
+    background-color: lightyellow;
+    color: black;
+}

@@ -2,6 +2,7 @@
 
 eel.expose(getFormInfos);
 eel.expose(addElement);
+eel.expose(clearElement);
 
 document.addEventListener('DOMContentLoaded', load);
 
@@ -18,13 +19,18 @@ function load(){
 
 async function getFormInfos(forms){
     const new_name = forms.investigationName.value;
-    let new_investigation = await eel.create_investigations(new_name)();
+    const new_status = forms.investigationStatus.value;
+    let new_investigation = await eel.create_investigations(new_name, new_status)();
     addElement(logInv, new_investigation);
     getId(logInv).classList.add('ok');
 }
 
 function addElement(id, html){
     getId(id).innerHTML = html;
+}
+
+function clearElement(id){
+    getId(id).innerHTML = '';
 }
 
 function setMaxDate() {
@@ -112,12 +118,20 @@ function recordingValue(){
     }
 }
 
-function fillEvidence(chosenInvestigation, node){
+function fillEvidencePeople(chosenInvestigation){
     eel.fill_evidence_table(chosenInvestigation);
     getId('evidenceTable').removeAttribute('hidden');
-}
-
-function fillPeople(chosenInvestigation, node){
     eel.fill_people_table(chosenInvestigation);
     getId('peopleTable').removeAttribute('hidden');
+}
+
+function selectInvestigation(node) {
+    queryAll('.selected').forEach(tag => tag.classList.remove('selected'));
+    node.classList.add('selected');
+}
+
+async function filterStatus(status, investigationName){
+    if (await eel.filter_status(status)()){
+        getId(investigationName).setAttribute('class', 'selected');
+    }
 }

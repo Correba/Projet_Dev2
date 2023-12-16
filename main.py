@@ -48,33 +48,43 @@ def update_investigation():
     - fill the HTML table with the content of the BACKUP_FILE
     """
     save_object()
-    fill_table_investigations()
+    fill_investigations_table()
 
 
 @eel.expose
-def create_investigations(element):
+def create_investigations(element: str, status: str, args=None):
     """
     :pre: element is a string
     :post: create an investigation named element and adds it to INVESTIGATIONS
     """
+    element = str.capitalize(element)
+    if element in INVESTIGATIONS:
+        INVESTIGATIONS[element].status = status
+        update_investigation()
+        return f'Investigation {element}\'s status changed to {status}'
     INVESTIGATIONS[element] = Investigation(element)
+    INVESTIGATIONS[element].status = status
     update_investigation()
     return f'Investigation {element} created'
 
 
 @eel.expose
-def fill_investigations_table(args=None):
+def fill_investigations_table(chosen_investigations: str = None, args=None):
     """
     :pre: args is required by eel module but is not used
     :post: fill the HTML table with the content of BACKUP_FILE
     """
     read_save_file()
+    if not chosen_investigations:
+        chosen_investigations = INVESTIGATIONS
     html = ''
     select = ''
-    for investigation in list(INVESTIGATIONS.values()):
-        html += (f'<tr><td>{investigation.name}</td><td onclick="fillEvidence(\'{investigation.name}\', this)">'
-                 f'{len(investigation.evidence)}</td><td onclick="fillPeople(\'{investigation.name}\', this)">'
-                 f'{len(investigation.people)}</td><td>{investigation.status}</td></tr>')
+    for investigation in list(chosen_investigations.values()):
+        html += (f'<tr id="{investigation.name}" onclick="selectInvestigation(this)"><td>{investigation.name}</td>'
+                 f'<td onclick="fillEvidencePeople(\'{investigation.name}\')">{len(investigation.evidence)}</td>'
+                 f'<td onclick="fillEvidencePeople(\'{investigation.name}\')">{len(investigation.people)}</td>'
+                 f'<td onclick="filterStatus(\'{investigation.status}\', \'{investigation.name}\')">'
+                 f'{investigation.status}</td></tr>')
         select += f'<option value="{investigation.name}">{investigation.name}</value>'
     eel.addElement('investigationContent', html)
     eel.addElement('evidence_select', select)
@@ -119,7 +129,7 @@ def make_type_input(chosen_type: str, parent_id: str, args=None):
                     'victim': ['testimony', 'contact', 'condition', 'circumstance']}
 
     if chosen_type == 'default':
-        eel.addElement(return_id, '')
+        eel.clearElement(return_id)
         return
 
     match chosen_element:
@@ -158,6 +168,7 @@ def make_evidence(chosen_type: str, chosen_investigation: str, data: list, args=
     :post: creates an Evidence or inheritor and adds it to the chosen_investigation in INVESTIGATIONS
     """
     name, description, date, file, *extra = data
+    name = str.capitalize(name)
     date = datetime.datetime.strptime(date, '%Y-%m-%d').date()
     try:
         match chosen_type:
@@ -189,6 +200,7 @@ def make_person(chosen_type: str, chosen_investigation: str, data: list, args=No
     :post: creates a Person or inheritor and adds it to the chosen_investigation in INVESTIGATIONS
     """
     lastname, firstname, birthdate, gender, *extra = data
+    lastname, firstname = map(str.capitalize, [lastname, firstname])
     birthdate = datetime.datetime.strptime(birthdate, '%Y-%m-%d').date()
     try:
         match chosen_type:
@@ -245,9 +257,32 @@ def fill_people_table(chosen_investigation, args=None):
                 people_type = 'Victim'
             case _:
                 people_type = '/'
-        html += (f'<tr><td>{people.lastname.capitalize()}</td><td>{people.firstname.capitalize()}</td>'
-                 f'<td>{people.birthdate}</td><td>{people.gender}</td><td>{people_type}</td></tr>')
+        html += (f'<tr><td>{people.lastname}</td><td>{people.firstname}</td><td>{people.birthdate}</td>'
+                 f'<td>{people.gender}</td><td>{people_type}</td></tr>')
     eel.addElement('peopleContent', html)
+
+
+@eel.expose
+def sort_investigations(row, args=None):
+    match row:
+        case 'name':
+            sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: x[1].name))
+        case 'status':
+            sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: x[1].status))
+        case 'evidence':
+            sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: len(x[1].evidence), reverse=True))
+        case 'people':
+            sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: len(x[1].people), reverse=True))
+    eel.clearElement('investigationContent')
+    fill_investigations_table(sorted_investigations)
+
+
+@eel.expose
+def filter_status(status, args=None):
+    filtered_investigations = dict(filter(lambda x: x[1].status == status, INVESTIGATIONS.items()))
+    eel.clearElement('investigationContent')
+    fill_investigations_table(filtered_investigations)
+    return True
 
 
 if __name__ == '__main__':
