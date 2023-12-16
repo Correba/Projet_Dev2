@@ -5,16 +5,22 @@ eel.expose(addElement);
 
 document.addEventListener('DOMContentLoaded', load);
 
+const logInv = "log_investigation";
+const logEv = "log_evidence";
+const logPe = "log_people";
+
 function load(){
-    eel.fill_table_investigations();
+    eel.fill_investigations_table();
     eel.fill_type_forms();
     setMaxDate();
     getId('evidenceType').addEventListener('change', recordingValue);
 }
 
-function getFormInfos(forms){
+async function getFormInfos(forms){
     const new_name = forms.investigationName.value;
-    eel.create_investigations(new_name);
+    let new_investigation = await eel.create_investigations(new_name)();
+    addElement(logInv, new_investigation);
+    getId(logInv).classList.add('ok');
 }
 
 function addElement(id, html){
@@ -26,7 +32,7 @@ function setMaxDate() {
     queryAll('input[type="date"]').forEach(inputDate => inputDate.setAttribute("max", `${today}`));
 }
 
-function addEvidence(forms){
+async function addEvidence(forms){
     const chosenType = forms.evidenceType.value;
     const chosenInvestigation = forms.evidence_select.value;
     const name = forms.evidenceName.value;
@@ -36,32 +42,60 @@ function addEvidence(forms){
     const data = [name, description, date, file];
     switch (chosenType) {
         case 'picture':
+            data.push(forms.evidencePicture.value);
             break;
         case 'object':
+            data.push(forms.evidenceObject.value);
             break;
         case 'recording':
+            data[-1] = forms.evidenceRecording.value;
             break;
-        default:
-            eel.make_evidence(chosenType, chosenInvestigation, data);
     }
+    let new_evidence = await eel.make_evidence(chosenType, chosenInvestigation, data)();
+    if (new_evidence.includes('Invalid')){
+        new_evidence = new_evidence.split(':')[1];
+        getId(logEv).setAttribute('class', 'error');
+    } else {
+        getId(logEv).setAttribute('class', 'ok');
+    }
+    addElement(logEv, new_evidence);
 }
 
-function addPeople(forms){
+async function addPeople(forms){
     const chosenType = forms.peopleType.value;
     const chosenInvestigation = forms.people_select.value;
     const firstname = forms.peopleFirstname.value;
     const lastname = forms.peopleLastname.value;
     const birthdate = forms.peopleBirthdate.value; //yyyy-mm-dd
     const gender = forms.peopleGender.value;
-    const data = [firstname, lastname, birthdate, gender];
+    const data = [lastname, firstname, birthdate, gender];
     switch (chosenType) {
         case 'suspect' || 'culprit':
+            data.push(forms.peoplePicture.value);
+            data.push(forms.peopleSuspicion);
+            data.push(forms.peopleCriminal_record.value);
+            if (chosenType === 'culprit'){
+                data.push(forms.peopleMotivation.value);
+                data.push(forms.peopleVictim_relationship.value)
+            }
             break;
         case 'witness' || 'victim':
+            data.push(forms.peopleTestimony.value);
+            data.push(forms.peopleContact.value);
+            if (chosenType === 'witness'){
+                data.push(forms.peopleCondition.value);
+                data.push(forms.peopleCircumstance.value);
+            }
             break;
-        default:
-            eel.make_person(chosenType, chosenInvestigation, data);
     }
+    let new_people = await eel.make_person(chosenType, chosenInvestigation, data)();
+    if (new_people.includes('Invalid')){
+        new_people = new_people.split(':')[1];
+        getId(logPe).setAttribute('class', 'error');
+    } else {
+        getId(logPe).setAttribute('class', 'ok');
+    }
+    addElement(logPe, new_people);
 }
 
 function recordingValue(){
@@ -76,4 +110,14 @@ function recordingValue(){
             recordingTag.setAttribute('required', 'true');
             hidden.forEach(tag => tag.removeAttribute('hidden'));
     }
+}
+
+function fillEvidence(chosenInvestigation, node){
+    eel.fill_evidence_table(chosenInvestigation);
+    getId('evidenceTable').removeAttribute('hidden');
+}
+
+function fillPeople(chosenInvestigation, node){
+    eel.fill_people_table(chosenInvestigation);
+    getId('peopleTable').removeAttribute('hidden');
 }

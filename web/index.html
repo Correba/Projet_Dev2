@@ -17,20 +17,51 @@
     </div>
 
     <section id="aff_investigations" class="tabcontent">
-        <div id="investigationTable">
-            <h1>List of investigations</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Evidences</th>
-                        <th>People</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                <tbody id="investigationContent">
-                </tbody>
-            </table>
+        <div class="container">
+            <div id="investigationTable">
+                <h1>List of investigations</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Evidences</th>
+                            <th>People</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="investigationContent">
+                    </tbody>
+                </table>
+            </div>
+            <div id="evidenceTable" hidden="hidden">
+                <h1>List of evidences</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Date</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="evidenceContent"></tbody>
+                </table>
+            </div>
+            <div id="peopleTable" hidden="hidden">
+                <h1>List of people</h1>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Birthdate</th>
+                            <th>Gender</th>
+                            <th>Type</th>
+                        </tr>
+                    </thead>
+                    <tbody id="peopleContent"></tbody>
+                </table>
+            </div>
         </div>
     </section>
 
