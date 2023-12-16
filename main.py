@@ -2,6 +2,8 @@
 import datetime
 import pickle
 import eel
+import re
+import os
 
 from Projet_Dev2.libs.classes.culprit import Culprit
 from Projet_Dev2.libs.classes.empty_value import EmptyValue
@@ -18,34 +20,71 @@ from Projet_Dev2.libs.classes.witness import Witness
 eel.init('web')
 
 INVESTIGATIONS = {}
-BACKUP_FILE = 'investigations_data.bin'
+
+
+def use_regex(input_text):
+    """
+    :pre: input_text is a string
+    :post: return the input_text if input_text matches the regex pattern else return None
+    """
+    pattern = re.compile(r".*investigations_data.*\.bin")
+    return pattern.match(input_text)
+
+
+def gen_backup_file():
+    """
+    :post: yield the name of the backup_file if it exists
+    """
+    for file in os.listdir('./'):
+        if use_regex(file):
+            yield file
 
 
 def save_object():
     """
-    :post: save an INVESTIGATIONS in BACKUP_FILE
+    :post: save INVESTIGATIONS in backup_file
     """
-    with open(BACKUP_FILE, 'wb') as output:
-        pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
+    backup_file = gen_backup_file()  # generator and regex
+
+    while True:
+        try:
+            with open(next(backup_file), 'wb') as output:
+                pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
+                break
+        except FileNotFoundError:
+            pass
+        except IOError:
+            pass
+        except StopIteration:
+            with open('investigations_data.bin', 'wb') as output:
+                pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
+            break
 
 
 def read_save_file():
     """
-    :post: initialize INVESTIGATIONS with the Investigations stored in BACKUP_FILE
+    :post: initialize INVESTIGATIONS with the Investigations stored in backup_file
     """
-    try:
-        with open(BACKUP_FILE, 'rb') as input_file:
-            global INVESTIGATIONS
-            INVESTIGATIONS = pickle.load(input_file)
-    except FileNotFoundError:
-        pass
+    backup_file = gen_backup_file()  # generator and regex
+    while True:
+        try:
+            with open(next(backup_file) if backup_file else '', 'rb') as input_file:
+                global INVESTIGATIONS
+                INVESTIGATIONS = pickle.load(input_file)
+                break
+        except FileNotFoundError:
+            pass
+        except IOError:
+            pass
+        except StopIteration:
+            break
 
 
 def update_investigation():
     """
     :post:
-    - save an INVESTIGATIONS in BACKUP_FILE
-    - fill the HTML table with the content of the BACKUP_FILE
+    - save an INVESTIGATIONS in backup_file
+    - fill the HTML table with the content of the backup_file
     """
     save_object()
     fill_investigations_table()
@@ -72,7 +111,7 @@ def create_investigations(element: str, status: str, args=None):
 def fill_investigations_table(chosen_investigations: str = None, args=None):
     """
     :pre: args is required by eel module but is not used
-    :post: fill the HTML table with the content of BACKUP_FILE
+    :post: fill the HTML table with the content of backup_file
     """
     read_save_file()
     if not chosen_investigations:
