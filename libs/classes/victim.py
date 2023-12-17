@@ -1,6 +1,6 @@
 import datetime
 
-from Projet_Dev2.libs.classes.witness import Witness
+from .witness import Witness
 
 
 class Victim(Witness):

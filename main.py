@@ -4,18 +4,20 @@ import pickle
 import eel
 import re
 import os
+import logging
+import atexit
 
-from Projet_Dev2.libs.classes.culprit import Culprit
-from Projet_Dev2.libs.classes.empty_value import EmptyValue
-from Projet_Dev2.libs.classes.object import Object
-from Projet_Dev2.libs.classes.picture import Picture
-from Projet_Dev2.libs.classes.investigation import Investigation
-from Projet_Dev2.libs.classes.evidence import Evidence
-from Projet_Dev2.libs.classes.person import Person
-from Projet_Dev2.libs.classes.recording import Recording
-from Projet_Dev2.libs.classes.suspect import Suspect
-from Projet_Dev2.libs.classes.victim import Victim
-from Projet_Dev2.libs.classes.witness import Witness
+from libs.classes.culprit import Culprit
+from libs.classes.empty_value import EmptyValue
+from libs.classes.object import Object
+from libs.classes.picture import Picture
+from libs.classes.investigation import Investigation
+from libs.classes.evidence import Evidence
+from libs.classes.person import Person
+from libs.classes.recording import Recording
+from libs.classes.suspect import Suspect
+from libs.classes.victim import Victim
+from libs.classes.witness import Witness
 
 eel.init('web')
 
@@ -30,8 +32,12 @@ def log(message, error=False):
     - error: a boolean that represents if the message is an error or not
     :post: add message to the log file
     """
-    with open('./logs/log.txt' if not error else './logs/error_log.txt', 'a') as log_file:
-        log_file.write(f'{datetime.datetime.now()} : {message}\n')
+    logging.basicConfig(filename='./logs/log.txt', format='%(asctime)s ---> %(levelname)s : %(message)s',
+                        encoding='utf-8', level=logging.DEBUG)
+    if error:
+        logging.error(message)
+    else:
+        logging.info(message)
 
 
 def use_regex(input_text):
@@ -359,5 +365,6 @@ def filter_status(status, args=None):
 
 
 if __name__ == '__main__':
-    eel.start('index.html', mode="browser")
     log('Starting the app...')
+    atexit.register(log, 'App closed')
+    eel.start('index.html', mode="browser")

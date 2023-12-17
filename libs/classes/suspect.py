@@ -1,6 +1,6 @@
 import datetime
 
-from Projet_Dev2.libs.classes.person import Person
+from .person import Person
 
 
 class Suspect(Person):

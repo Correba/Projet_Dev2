@@ -1,6 +1,6 @@
 import datetime
 
-from Projet_Dev2.libs.classes.evidence import Evidence
+from .evidence import Evidence
 
 
 class Object(Evidence):

@@ -5,7 +5,6 @@ eel.expose(addElement);
 eel.expose(clearElement);
 
 document.addEventListener('DOMContentLoaded', load);
-window.addEventListener('beforeunload', eel.log("Closing the app..."));
 
 const logInv = "log_investigation";
 const logEv = "log_evidence";

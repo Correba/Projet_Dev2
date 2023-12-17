@@ -1,6 +1,6 @@
 import datetime
 
-from Projet_Dev2.libs.classes.empty_value import EmptyValue
+from .empty_value import EmptyValue
 
 
 class Evidence:
