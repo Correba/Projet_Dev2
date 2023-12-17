@@ -22,9 +22,21 @@ eel.init('web')
 INVESTIGATIONS = {}
 
 
+@eel.expose
+def log(message, error=False):
+    """
+    :pre:
+    - message: a string that represents the message to log
+    - error: a boolean that represents if the message is an error or not
+    :post: add message to the log file
+    """
+    with open('./logs/log.txt' if not error else './logs/error_log.txt', 'a') as log_file:
+        log_file.write(f'{datetime.datetime.now()} : {message}\n')
+
+
 def use_regex(input_text):
     """
-    :pre: input_text is a string
+    :pre: input_text is a string to match with the regex pattern .*investigations_data.*\.bin
     :post: return the input_text if input_text matches the regex pattern else return None
     """
     pattern = re.compile(r".*investigations_data.*\.bin")
@@ -54,11 +66,13 @@ def save_object():
         except FileNotFoundError:
             pass
         except IOError:
-            pass
+            log(f'Error while reading backup file {output.name}', True)
         except StopIteration:
             with open('investigations_data.bin', 'wb') as output:
                 pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
+                log('Backup file not found, creating a new one')
             break
+    log(f'Saved INVESTIGATIONS into {output.name}')
 
 
 def read_save_file():
@@ -68,16 +82,18 @@ def read_save_file():
     backup_file = gen_backup_file()  # generator and regex
     while True:
         try:
-            with open(next(backup_file) if backup_file else '', 'rb') as input_file:
+            with open(next(backup_file), 'rb') as input_file:
                 global INVESTIGATIONS
                 INVESTIGATIONS = pickle.load(input_file)
+                log(f'Loaded INVESTIGATIONS from {input_file.name}')
                 break
         except FileNotFoundError:
             pass
         except IOError:
-            pass
+            log(f'Error while reading backup file {input_file.name}', True)
         except StopIteration:
             break
+        log('No backup file found')
 
 
 def update_investigation():
@@ -99,12 +115,14 @@ def create_investigations(element: str, status: str, args=None):
     element = str.capitalize(element)
     if element in INVESTIGATIONS:
         INVESTIGATIONS[element].status = status
-        update_investigation()
-        return f'Investigation {element}\'s status changed to {status}'
-    INVESTIGATIONS[element] = Investigation(element)
-    INVESTIGATIONS[element].status = status
+        message = f'Investigation {element}\'s status changed to {status}'
+    else:
+        INVESTIGATIONS[element] = Investigation(element)
+        INVESTIGATIONS[element].status = status
+        message = f'Investigation {element} created'
+    log(message)
     update_investigation()
-    return f'Investigation {element} created'
+    return message
 
 
 @eel.expose
@@ -128,6 +146,7 @@ def fill_investigations_table(chosen_investigations: str = None, args=None):
     eel.addElement('investigationContent', html)
     eel.addElement('evidence_select', select)
     eel.addElement('people_select', select)
+    log('Table filled successfully with chosen Investigations')
 
 
 @eel.expose
@@ -147,6 +166,7 @@ def fill_type_forms(args=None):
         person_select += f'<option value="{person}">{person.capitalize()}</option>'
     eel.addElement('evidenceType', evidence_select)
     eel.addElement('peopleType', person_select)
+    log('Forms filled successfully with types of evidence and people')
 
 
 @eel.expose
@@ -169,6 +189,7 @@ def make_type_input(chosen_type: str, parent_id: str, args=None):
 
     if chosen_type == 'default':
         eel.clearElement(return_id)
+        log(f'{return_id} set to default successfully')
         return
 
     match chosen_element:
@@ -194,6 +215,7 @@ def make_type_input(chosen_type: str, parent_id: str, args=None):
                         type_input += 'type="text" '
                 type_input += f'id="{new_id}" name="{new_id}" required><br>'
     eel.addElement(return_id, type_input)
+    log(f'Added {type_input}\'s input to {return_id} successfully')
 
 
 @eel.expose
@@ -220,12 +242,16 @@ def make_evidence(chosen_type: str, chosen_investigation: str, data: list, args=
             case _:
                 new_evidence = Evidence(name, description, date, file)
         INVESTIGATIONS[chosen_investigation].add_evidence(new_evidence)
+        message = f'Evidence {name} created successfully'
+        log(message)
         update_investigation()
-        return f'Evidence {name} created'
     except ValueError as value_error:
-        return f'Invalid:{value_error}'
+        message = f'Invalid:{value_error}'
+        log(message, True)
     except EmptyValue as empty_error:
-        return f'Invalid:{empty_error}'
+        message = f'Invalid:{empty_error}'
+        log(message, True)
+    return message
 
 
 @eel.expose
@@ -255,12 +281,16 @@ def make_person(chosen_type: str, chosen_investigation: str, data: list, args=No
             case _:
                 new_person = Person(lastname, firstname, birthdate, gender)
         INVESTIGATIONS[chosen_investigation].add_people(new_person)
+        message = f'Person {firstname} {lastname} created successfully'
+        log(message)
         update_investigation()
-        return f'Person {firstname} {lastname} created'
     except ValueError as value_error:
-        return f'Invalid:{value_error}'
+        message = f'Invalid:{value_error}'
+        log(message, True)
     except EmptyValue as empty_error:
-        return f'Invalid:{empty_error}'
+        message = f'Invalid:{empty_error}'
+        log(message, True)
+    return message
 
 
 @eel.expose
@@ -279,6 +309,7 @@ def fill_evidence_table(chosen_investigation, args=None):
         html += (f'<tr><td>{evidence.name.capitalize()}</td><td>{evidence.description}</td><td>{evidence.date}</td>'
                  f'<td>{evidence_type}</td></tr>')
     eel.addElement('evidenceContent', html)
+    log(f'Filling evidence table with {chosen_investigation}\'s evidence...')
 
 
 @eel.expose
@@ -299,6 +330,7 @@ def fill_people_table(chosen_investigation, args=None):
         html += (f'<tr><td>{people.lastname}</td><td>{people.firstname}</td><td>{people.birthdate}</td>'
                  f'<td>{people.gender}</td><td>{people_type}</td></tr>')
     eel.addElement('peopleContent', html)
+    log(f'Filling people table with {chosen_investigation}\'s people...')
 
 
 @eel.expose
@@ -313,6 +345,7 @@ def sort_investigations(row, args=None):
         case 'people':
             sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: len(x[1].people), reverse=True))
     eel.clearElement('investigationContent')
+    log(f'Sorted investigations by {row} successfully')
     fill_investigations_table(sorted_investigations)
 
 
@@ -320,9 +353,11 @@ def sort_investigations(row, args=None):
 def filter_status(status, args=None):
     filtered_investigations = dict(filter(lambda x: x[1].status == status, INVESTIGATIONS.items()))
     eel.clearElement('investigationContent')
+    log(f'Filtered investigations by {status} status successfully')
     fill_investigations_table(filtered_investigations)
     return True
 
 
 if __name__ == '__main__':
     eel.start('index.html', mode="browser")
+    log('Starting the app...')

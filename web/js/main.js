@@ -5,6 +5,7 @@ eel.expose(addElement);
 eel.expose(clearElement);
 
 document.addEventListener('DOMContentLoaded', load);
+window.addEventListener('beforeunload', eel.log("Closing the app..."));
 
 const logInv = "log_investigation";
 const logEv = "log_evidence";
@@ -15,6 +16,7 @@ function load(){
     eel.fill_type_forms();
     setMaxDate();
     getId('evidenceType').addEventListener('change', recordingValue);
+    eel.log('App loaded');
 }
 
 async function getFormInfos(forms){
@@ -23,6 +25,14 @@ async function getFormInfos(forms){
     let new_investigation = await eel.create_investigations(new_name, new_status)();
     addElement(logInv, new_investigation);
     getId(logInv).classList.add('ok');
+}
+
+function getId(id) {
+    return document.getElementById(id);
+}
+
+function queryAll(selector){
+    return document.querySelectorAll(selector);
 }
 
 function addElement(id, html){
@@ -57,10 +67,12 @@ async function addEvidence(forms){
             data[-1] = forms.evidenceRecording.value;
             break;
     }
+    eel.log('Adding evidence...')
     let new_evidence = await eel.make_evidence(chosenType, chosenInvestigation, data)();
     if (new_evidence.includes('Invalid')){
         new_evidence = new_evidence.split(':')[1];
         getId(logEv).setAttribute('class', 'error');
+        eel.log('Displaying evidence error...');
     } else {
         getId(logEv).setAttribute('class', 'ok');
     }
@@ -94,10 +106,12 @@ async function addPeople(forms){
             }
             break;
     }
+    eel.log('Adding people...')
     let new_people = await eel.make_person(chosenType, chosenInvestigation, data)();
     if (new_people.includes('Invalid')){
         new_people = new_people.split(':')[1];
         getId(logPe).setAttribute('class', 'error');
+        eel.log('Displaying people error...');
     } else {
         getId(logPe).setAttribute('class', 'ok');
     }
@@ -121,8 +135,10 @@ function recordingValue(){
 function fillEvidencePeople(chosenInvestigation){
     eel.fill_evidence_table(chosenInvestigation);
     getId('evidenceTable').removeAttribute('hidden');
+    eel.log('Evidence table filled successfully');
     eel.fill_people_table(chosenInvestigation);
     getId('peopleTable').removeAttribute('hidden');
+    eel.log('People table filled successfully');
 }
 
 function selectInvestigation(node) {
