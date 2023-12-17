@@ -32,7 +32,9 @@ def log(message, error=False):
     - error: a boolean that represents if the message is an error or not
     :post: add message to the log file
     """
-    logging.basicConfig(filename='./logs/log.txt', format='%(asctime)s ---> %(levelname)s : %(message)s',
+    log_filename = "./logs/output.log"
+    os.makedirs(os.path.dirname(log_filename), exist_ok=True)
+    logging.basicConfig(filename=log_filename, format='%(asctime)s ---> %(levelname)s : %(message)s',
                         encoding='utf-8', level=logging.DEBUG)
     if error:
         logging.error(message)
@@ -53,17 +55,19 @@ def gen_backup_file():
     """
     :post: yield the name of the backup_file if it exists
     """
-    for file in os.listdir('./'):
+    db_dir = './db'
+    for file in os.listdir(db_dir):
         if use_regex(file):
-            yield file
+            yield f'{db_dir}/{file}'
 
 
 def save_object():
     """
     :post: save INVESTIGATIONS in backup_file
     """
+    data_filename = "./db/investigations_data.bin"
+    os.makedirs(os.path.dirname(data_filename), exist_ok=True)
     backup_file = gen_backup_file()  # generator and regex
-
     while True:
         try:
             with open(next(backup_file), 'wb') as output:
@@ -74,9 +78,9 @@ def save_object():
         except IOError:
             log(f'Error while reading backup file {output.name}', True)
         except StopIteration:
-            with open('investigations_data.bin', 'wb') as output:
+            with open(data_filename, 'wb') as output:
                 pickle.dump(INVESTIGATIONS, output, pickle.HIGHEST_PROTOCOL)
-                log('Backup file not found, creating a new one')
+                log(f'Backup file not found, creating {output.name}')
             break
     log(f'Saved INVESTIGATIONS into {output.name}')
 
