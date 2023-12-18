@@ -102,8 +102,11 @@ def read_save_file():
         except IOError:
             log(f'Error while reading backup file {input_file.name}', True)
         except StopIteration:
+            log('No backup file found')
             break
-        log('No backup file found')
+        except EOFError:
+            log('Backup file is empty')
+            break
 
 
 def update_investigation():
