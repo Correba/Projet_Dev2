@@ -308,6 +308,10 @@ def make_person(chosen_type: str, chosen_investigation: str, data: list, args=No
 
 @eel.expose
 def fill_evidence_table(chosen_investigation, args=None):
+    """
+    :pre: chosen_investigation is a string that represents the name of an investigation
+    :post: fill the HTML table with the evidence of chosen_investigation
+    """
     html = ''
     for evidence in INVESTIGATIONS[chosen_investigation].evidence:
         match type(evidence):
@@ -327,6 +331,10 @@ def fill_evidence_table(chosen_investigation, args=None):
 
 @eel.expose
 def fill_people_table(chosen_investigation, args=None):
+    """
+    :pre: chosen_investigation is a string that represents the name of an investigation
+    :post: fill the HTML table with the people of chosen_investigation
+    """
     html = ''
     for people in INVESTIGATIONS[chosen_investigation].people:
         match type(people):
@@ -348,6 +356,10 @@ def fill_people_table(chosen_investigation, args=None):
 
 @eel.expose
 def sort_investigations(row, args=None):
+    """
+    :pre: row is a string that represents the name of a row in the investigation table
+    :post: sort the table by row
+    """
     match row:
         case 'name':
             sorted_investigations = dict(sorted(INVESTIGATIONS.items(), key=lambda x: x[1].name))
@@ -364,6 +376,10 @@ def sort_investigations(row, args=None):
 
 @eel.expose
 def filter_status(status, args=None):
+    """
+    :pre: status is a string that represents the status of an investigation
+    :post: filter the investigation table by status
+    """
     filtered_investigations = dict(filter(lambda x: x[1].status == status, INVESTIGATIONS.items()))
     eel.clearElement('investigationContent')
     log(f'Filtered investigations by {status} status successfully')
